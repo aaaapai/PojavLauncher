@@ -48,6 +48,7 @@ You can get PojavLauncher via three methods:
 ## Building
 If you want to build from source code, follow the steps below.
 ### Java Runtime Environment (JRE)
+- The JRE is now built-in to the source code, but if you want to build it yourself, read below.
 - JRE for Android is [here](https://github.com/PojavLauncherTeam/openjdk-multiarch-jdk8u), and the build script is [here](https://github.com/PojavLauncherTeam/android-openjdk-build-multiarch).
 - Follow build instruction on build script [README.md](https://github.com/PojavLauncherTeam/android-openjdk-build-multiarch/blob/buildjre8/README.md).
 - You can also get [CI auto builds](https://github.com/PojavLauncherTeam/android-openjdk-build-multiarch/actions) if you are lazy or are failing to build it for some reason.

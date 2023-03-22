@@ -53,12 +53,12 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     volatile public static boolean isInputStackCall;
 
     public float scaleFactor = 1;
-    private boolean mIsResuming = false;
+    private static boolean mIsResuming = false;
 
     public static TouchCharInput touchCharInput;
     private MinecraftGLSurface minecraftGLView;
     private static Touchpad touchpad;
-    private LoggerView loggerView;
+    private static LoggerView loggerView;
     private DrawerLayout drawerLayout;
     private ListView navDrawer;
     private View mDrawerPullButton;
@@ -422,7 +422,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         navDrawer.setOnItemClickListener(gameActionClickListener);
         isInEditor = false;
     }
-    private void openLogOutput() {
+    public static void openLogOutput() {
         loggerView.setVisibility(View.VISIBLE);
         mIsResuming = false;
     }

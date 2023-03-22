@@ -20,6 +20,8 @@ import static net.kdt.pojavlaunch.LwjglGlfwKeycode.GLFW_KEY_UNKNOWN;
 import static org.lwjgl.glfw.CallbackBridge.sendKeyPress;
 import static org.lwjgl.glfw.CallbackBridge.sendMouseButton;
 
+import com.kdt.LoggerView;
+
 @SuppressLint({"ViewConstructor", "AppCompatCustomView"})
 public class ControlButton extends TextView implements ControlInterface {
     private final Paint mRectPaint = new Paint();
@@ -231,6 +233,9 @@ public class ControlButton extends TextView implements ControlInterface {
                 break;
             case ControlData.SPECIALBTN_FORCEQUIT:
                 MainActivity.dialogForceClose(getContext());
+                break;
+            case ControlData.SPECIALBTN_LOGS:
+                MainActivity.openLogOutput();
                 break;
         }
     }
