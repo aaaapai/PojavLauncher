@@ -35,6 +35,7 @@ import android.widget.Toast;
 import static android.os.Build.VERSION.SDK_INT;
 import static android.os.Build.VERSION_CODES.P;
 import static net.kdt.pojavlaunch.PojavApplication.sExecutorService;
+import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_ENABLE_FORGESPLASH;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_IGNORE_NOTCH;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_NOTCH_SIZE;
 
@@ -207,6 +208,26 @@ public final class Tools {
     }
 
     public static void disableSplash(String dir) {
+        if (PREF_ENABLE_FORGESPLASH)
+        {
+            Log.w(Tools.APP_NAME, "You have enabled the Forge splash screen! This may cause issues.");
+            mkdirs(dir + "/config");
+            Logger.getInstance().appendToLog("You have enabled the Forge splash screen! This may cause issues.");
+            File forgeSplashFile = new File(dir, "config/splash.properties");
+            String forgeSplashContent = "enabled=false";
+            try {
+                if (forgeSplashFile.exists()) {
+                    forgeSplashContent = Tools.read(forgeSplashFile.getAbsolutePath());
+                }
+                if (forgeSplashContent.contains("enabled=false")) {
+                    Tools.write(forgeSplashFile.getAbsolutePath(),
+                            forgeSplashContent.replace("enabled=false", "enabled=true"));
+                }
+            } catch (IOException e) {
+                Log.w(Tools.APP_NAME, "Could not enable Forge 1.12.2 and below splash screen!", e);
+            }
+            return;
+        }
         mkdirs(dir + "/config");
         File forgeSplashFile = new File(dir, "config/splash.properties");
         String forgeSplashContent = "enabled=true";

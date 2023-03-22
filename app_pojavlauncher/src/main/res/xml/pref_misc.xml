@@ -16,6 +16,13 @@
             android:key="arc_capes"
             android:summary="@string/arc_capes_desc"
             android:title="@string/arc_capes_title" />
+        <SwitchPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="false"
+            android:key="enableForgeSplash"
+            android:summary="@string/enable_forgesplash_description"
+            android:title="@string/enable_forgesplash_title" />
 
     </PreferenceCategory>
 

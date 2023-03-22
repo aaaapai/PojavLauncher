@@ -57,6 +57,9 @@ public class LauncherPreferences {
 
     public static boolean PREF_BUTTON_ALL_CAPS = true;
 
+    // Random Crap (Settings)
+    public static boolean PREF_ENABLE_FORGESPLASH = false;
+
 
     public static void loadPreferences(Context ctx) {
         //Required for the data folder.
@@ -94,6 +97,7 @@ public class LauncherPreferences {
         PREF_GYRO_INVERT_Y = DEFAULT_PREF.getBoolean("gyroInvertY", false);
         PREF_FORCE_VSYNC = DEFAULT_PREF.getBoolean("force_vsync", false);
         PREF_BUTTON_ALL_CAPS = DEFAULT_PREF.getBoolean("buttonAllCaps", true);
+        PREF_ENABLE_FORGESPLASH = DEFAULT_PREF.getBoolean("enableForgeSplash", false);
 
 /*
         if (PREF_CUSTOM_JAVA_ARGS.isEmpty()) {

@@ -229,6 +229,9 @@ public class ControlButton extends TextView implements ControlInterface {
             case ControlData.SPECIALBTN_MENU:
                 mControlLayout.notifyAppMenu();
                 break;
+            case ControlData.SPECIALBTN_FORCEQUIT:
+                MainActivity.dialogForceClose(getContext());
+                break;
         }
     }
 
