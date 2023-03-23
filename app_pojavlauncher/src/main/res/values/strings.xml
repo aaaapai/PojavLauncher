@@ -359,4 +359,5 @@
     <!-- Random Crap (Strings)-->
     <string name="enable_forgesplash_title">Enable Forge splash screen</string>
     <string name="enable_forgesplash_description">Enables the Forge splash screen. WARNING: Can cause issues.</string>
+    <string name="main_install_mrpack">Install .mrpack modpack</string>
 </resources>

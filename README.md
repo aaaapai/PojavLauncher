@@ -20,6 +20,7 @@
 - The official Twitter for PojavLauncher is [@PLaunchTeam](https://twitter.com/PLaunchTeam). Any others (most notably @PojavLauncher) are fake, please report them to Twitter's moderation team.
 
 ## Navigation
+- [New Features](#new-features)
 - [Introduction](#introduction)  
 - [Getting PojavLauncher](#getting-pojavlauncher)
 - [Building](#building) 
@@ -27,6 +28,11 @@
 - [License](#license) 
 - [Contributing](#contributing) 
 - [Credits & Third party components and their licenses](#credits--third-party-components-and-their-licenses-if-available)
+
+## New-Features
+- A Modrinth modpack installer
+- New special buttons (Force Quit/Logs) for custom controls!
+- Spoon.
 
 ## Introduction 
 * PojavLauncher is a Minecraft: Java Edition launcher for Android and iOS based on [Boardwalk](https://github.com/zhuowei/Boardwalk). 

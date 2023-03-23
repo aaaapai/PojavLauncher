@@ -8,6 +8,7 @@ import android.net.*;
 import android.os.*;
 import android.provider.OpenableColumns;
 import android.util.*;
+
 import com.google.gson.*;
 
 import java.io.*;
@@ -15,11 +16,11 @@ import java.lang.reflect.*;
 import java.nio.charset.*;
 import java.util.*;
 
-import net.kdt.pojavlaunch.extra.ExtraConstants;
-import net.kdt.pojavlaunch.extra.ExtraCore;
+import net.kdt.pojavlaunch.modrinth.ModpackParser;
 import net.kdt.pojavlaunch.multirt.MultiRTUtils;
 import net.kdt.pojavlaunch.prefs.*;
 import net.kdt.pojavlaunch.utils.*;
+import net.kdt.pojavlaunch.utils.FileUtils;
 import net.kdt.pojavlaunch.value.*;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
@@ -86,6 +87,7 @@ public final class Tools {
 
     public static final String LIBNAME_OPTIFINE = "optifine:OptiFine";
     public static final int RUN_MOD_INSTALLER = 2050;
+    public static final int RUN_MRPACK_INSTALLER = 2060;
 
 
     private static File getPojavStorageRoot(Context ctx) {
@@ -896,6 +898,76 @@ public final class Tools {
     /** Remove the current fragment */
     public static void removeCurrentFragment(FragmentActivity fragmentActivity){
         fragmentActivity.getSupportFragmentManager().popBackStackImmediate();
+    }
+
+    public static void installModpack(Activity activity) {
+        // Open file
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension("mrpack");
+        if(mimeType == null) mimeType = "*/*";
+        intent.setType(mimeType);
+        activity.startActivityForResult(intent, RUN_MRPACK_INSTALLER);
+    }
+
+    public static void launchModpackInstaller(Activity activity, @NonNull Intent data) throws IOException {
+        final ProgressDialog alertDialog = getWaitingDialog(activity);
+
+        final Uri uri = data.getData();
+        Log.d("Modpack Installer", "Installing modpack...");
+        Log.d("Modpack Installer", "Uri: " + uri.toString());
+        alertDialog.setMessage("Installing modpack...");
+
+        // Cache
+        Log.d("Modpack Installer", "Caching mrpack...");
+        sExecutorService.execute(() -> {
+            try {
+                final String name = getFileName(activity, uri);
+                final File modpackFile = new File(activity.getCacheDir(), name);
+                FileOutputStream fos = new FileOutputStream(modpackFile);
+                InputStream input = activity.getContentResolver().openInputStream(uri);
+                IOUtils.copy(input, fos);
+                input.close();
+                fos.close();
+            }catch(IOException e) {
+                Tools.showError(activity, e);
+            }
+        });
+
+        // Extract the mrpack
+        Log.d("Modpack Installer", "Extracting the mrpack...");
+        final String name = getFileName(activity, uri);
+        Log.d("Modpack Installer", "File name: " + name);
+        final String cacheDir = activity.getCacheDir().toString();
+        Log.d("Modpack Installer", "Cache Dir: " + cacheDir);
+        final File modpackFile = new File(activity.getCacheDir(), name);
+        Log.d("Modpack Installer", "modpackFile: " + modpackFile);
+
+        // Wait a few seconds so the copy can finish
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                File directory = new File(cacheDir + "/" + name + "dir");
+                directory.mkdirs();
+                try {
+                    FileUtils.unzip(modpackFile, new File(cacheDir + "/" + name + "dir"));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                Log.d("Modpack Installer", "Extracted!");
+
+                // Parse JSON
+                try {
+                    final String JSONString = FileUtils.getStringFromFile(cacheDir + "/" + name);
+                    ModpackParser.ParseModpackJSON(cacheDir + "/" + name);
+                } catch (IOException e) {
+                    Tools.showError(activity, e);
+                    alertDialog.cancel();
+                }
+
+            }
+        }, 5000); // 5 seconds
+
+
     }
 
     public static void installMod(Activity activity, boolean customJavaArgs) {

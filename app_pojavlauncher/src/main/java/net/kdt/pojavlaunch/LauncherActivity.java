@@ -41,6 +41,8 @@ import net.kdt.pojavlaunch.tasks.AsyncVersionList;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
+import java.io.IOException;
+
 public class LauncherActivity extends BaseActivity {
     public static final String SETTING_FRAGMENT_TAG = "SETTINGS_FRAGMENT";
 
@@ -206,6 +208,15 @@ public class LauncherActivity extends BaseActivity {
         if(resultCode != RESULT_OK) return;
         if(requestCode == Tools.RUN_MOD_INSTALLER && data != null){
             Tools.launchModInstaller(this, data);
+            return;
+        }
+        if(requestCode == Tools.RUN_MRPACK_INSTALLER && data != null){
+            try {
+                Tools.launchModpackInstaller(this, data);
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             return;
         }
         if(requestCode == MultiRTConfigDialog.MULTIRT_PICK_RUNTIME && data != null){
