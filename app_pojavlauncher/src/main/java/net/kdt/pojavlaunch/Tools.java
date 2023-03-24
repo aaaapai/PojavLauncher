@@ -14,9 +14,10 @@ import com.google.gson.*;
 import java.io.*;
 import java.lang.reflect.*;
 import java.nio.charset.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
-import net.kdt.pojavlaunch.modrinth.ModpackParser;
 import net.kdt.pojavlaunch.multirt.MultiRTUtils;
 import net.kdt.pojavlaunch.prefs.*;
 import net.kdt.pojavlaunch.utils.*;
@@ -26,6 +27,7 @@ import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.glfw.*;
 import android.view.*;
@@ -42,6 +44,7 @@ import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_NOTCH_SIZE;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -945,21 +948,41 @@ public final class Tools {
 
         // Wait a few seconds so the copy can finish
         new Handler().postDelayed(new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             public void run() {
                 File directory = new File(cacheDir + "/" + name + "dir");
                 directory.mkdirs();
                 try {
                     FileUtils.unzip(modpackFile, new File(cacheDir + "/" + name + "dir"));
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    Log.e("Modpack Installer", "ERROR: " + e);
+                    Tools.showError(activity, e);
+                    alertDialog.cancel();
                 }
                 Log.d("Modpack Installer", "Extracted!");
 
                 // Parse JSON
                 try {
                     final String JSONString = FileUtils.getStringFromFile(cacheDir + "/" + name);
-                    ModpackParser.ParseModpackJSON(cacheDir + "/" + name);
+//                    Modpack modpack = ModpackHelper.readModpackManifest(Paths.get(cacheDir + "/" + name), Charset.defaultCharset());
+//                    Log.d("Modpack Installer", "Modpack name: " + modpack.getName());
+//                    Log.d("Modpack Installer", "Modpack version: " + modpack.getVersion());
+//                    Log.d("Modpack Installer", "Modpack MC version: " + modpack.getGameVersion());
+//                    final String modpackPath = Tools.DIR_GAME_HOME + "/" + modpack.getName() + "-" + modpack.getVersion();
+//                    File modpackDirectory = new File(modpackPath);
+//                    Log.d("Modpack Installer", "Modpack dir: " + modpackPath);
+//                    modpackDirectory.mkdirs();
+                    // Copy files from "overrides" directory to modpack directory
+//                    Log.d("Modpack Installer", "Modpack overrides dir: " + cacheDir + "/" + name + "dir/overrides");
+//                    FileUtils.copyDirectory(new File(cacheDir + "/" + name + "dir/overrides"), new File(modpackPath));
+
+//                    ModpackConfiguration modpackConfiguration = ModpackHelper.readModpackConfiguration(new File(cacheDir + "/" + name + "dir/modrinth.index.json"));
+
+
+                    // for (int i; i < modpack.)
+                    throw new IOException("Not implemented! (got up to extracting the modpack)");
                 } catch (IOException e) {
+                    Log.e("Modpack Installer", "ERROR: " + e);
                     Tools.showError(activity, e);
                     alertDialog.cancel();
                 }

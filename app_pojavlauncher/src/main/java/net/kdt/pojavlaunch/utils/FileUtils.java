@@ -1,5 +1,9 @@
 package net.kdt.pojavlaunch.utils;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -9,6 +13,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -76,5 +82,21 @@ public class FileUtils {
         //Make sure you close all streams.
         fin.close();
         return ret;
+    }
+
+    //ChatGPT made this lol
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void copyDirectory(File sourceDir, File targetDir) throws IOException {
+        if (!targetDir.exists()) {
+            targetDir.mkdir();
+        }
+        for (File file : sourceDir.listFiles()) {
+            File targetFile = new File(targetDir.getAbsolutePath() + File.separator + file.getName());
+            if (file.isDirectory()) {
+                copyDirectory(file, targetFile);
+            } else {
+                Files.copy(file.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }
+        }
     }
 }

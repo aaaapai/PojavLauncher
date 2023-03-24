@@ -62,7 +62,7 @@ android {
     }
 	
     defaultConfig {
-        applicationId 'net.kdt.pojavlaunch.randomcrap'
+        applicationId 'net.kdt.pojavlaunch.community'
         minSdkVersion 21
         targetSdkVersion 33
         versionCode getDateSeconds()
@@ -77,9 +77,9 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.customDebug
-            resValue 'string', 'application_package', 'net.kdt.pojavlaunch.randomcrap.debug'
-            resValue 'string', 'storageProviderAuthorities', 'net.kdt.pojavlaunch.randomcrap.scoped.gamefolder.debug'
-            resValue 'string', 'shareProviderAuthority', 'net.kdt.pojavlaunch.randomcrap.scoped.controlfolder.debug'
+            resValue 'string', 'application_package', 'net.kdt.pojavlaunch.community.debug'
+            resValue 'string', 'storageProviderAuthorities', 'net.kdt.pojavlaunch.community.scoped.gamefolder.debug'
+            resValue 'string', 'shareProviderAuthority', 'net.kdt.pojavlaunch.community.scoped.controlfolder.debug'
         }
         proguard {
             initWith debug

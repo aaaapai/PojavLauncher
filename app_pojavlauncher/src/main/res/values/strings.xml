@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name part -->
-    <string name="app_name">PojavLauncher (Minecraft: Java Edition for Android)</string>
-    <string name="app_short_name">PojavLauncher (Random Crap)</string>
+    <string name="app_name">PojavLauncher (Minecraft: Java Edition for Android) (Community Edition)</string>
+    <string name="app_short_name">PojavLauncher (Community Edition)</string>
     <string name="app_motd">Launch Minecraft: Java Edition in your device!</string>
 
     <!-- Action bar part -->
@@ -356,8 +356,9 @@
     <string name="mcl_setting_subtitle_buttonallcaps">Disable this if you want to use lowercase letters in your controls</string>
     <string name="create_profile">Create new profile</string>
 
-    <!-- Random Crap (Strings)-->
+    <!-- Community Edition (Strings)-->
     <string name="enable_forgesplash_title">Enable Forge splash screen</string>
     <string name="enable_forgesplash_description">Enables the Forge splash screen. WARNING: Can cause issues.</string>
+    <string name="main_install_curseforgemodpack">Install Curseforge modpack</string>
     <string name="main_install_mrpack">Install .mrpack modpack</string>
 </resources>

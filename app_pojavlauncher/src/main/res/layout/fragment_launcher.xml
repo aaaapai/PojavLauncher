@@ -72,6 +72,16 @@
 		app:layout_constraintEnd_toStartOf="@+id/edit_profile_button"
 		app:layout_constraintStart_toStartOf="parent" />
 
+	<com.kdt.mcgui.LauncherMenuButton
+		android:id="@+id/install_mrpack_button"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/_66sdp"
+		android:background="?android:attr/selectableItemBackground"
+		android:drawableStart="@drawable/modrinth_logo"
+		android:text="@string/main_install_mrpack"
+
+		tools:ignore="MissingConstraints" />
+
 	<ImageButton
 		android:id="@+id/edit_profile_button"
 		android:layout_width="@dimen/_52sdp"
