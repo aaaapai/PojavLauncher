@@ -4,7 +4,7 @@ fov:0.0
 gamma:0.5070422
 saturation:0.0
 renderDistance:4
-guiScale:3
+guiScale:0
 particles:1
 bobView:false
 anaglyph3d:false
@@ -23,7 +23,7 @@ chatColors:true
 chatLinks:true
 chatLinksPrompt:true
 chatOpacity:1.0
-snooperEnabled:true
+snooperEnabled:false
 fullscreen:true
 enableVsync:false
 hideServerAddress:false
