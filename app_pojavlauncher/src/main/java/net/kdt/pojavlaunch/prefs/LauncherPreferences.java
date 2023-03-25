@@ -57,7 +57,7 @@ public class LauncherPreferences {
 
     public static boolean PREF_BUTTON_ALL_CAPS = true;
 
-    // Random Crap (Settings)
+    // Community Edition (Settings)
     public static boolean PREF_ENABLE_FORGESPLASH = false;
 
 

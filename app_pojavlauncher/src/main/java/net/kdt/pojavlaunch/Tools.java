@@ -14,10 +14,9 @@ import com.google.gson.*;
 import java.io.*;
 import java.lang.reflect.*;
 import java.nio.charset.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
+import net.kdt.pojavlaunch.exception.NotImplementedException;
 import net.kdt.pojavlaunch.multirt.MultiRTUtils;
 import net.kdt.pojavlaunch.prefs.*;
 import net.kdt.pojavlaunch.utils.*;
@@ -27,7 +26,6 @@ import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
 import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.glfw.*;
 import android.view.*;
@@ -980,8 +978,8 @@ public final class Tools {
 
 
                     // for (int i; i < modpack.)
-                    throw new IOException("Not implemented! (got up to extracting the modpack)");
-                } catch (IOException e) {
+                    throw new NotImplementedException("Not implemented! (got up to extracting the modpack)");
+                } catch (IOException | NotImplementedException e ) {
                     Log.e("Modpack Installer", "ERROR: " + e);
                     Tools.showError(activity, e);
                     alertDialog.cancel();

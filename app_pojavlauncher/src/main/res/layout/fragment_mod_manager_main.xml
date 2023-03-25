@@ -20,7 +20,7 @@
 
 
         <com.kdt.mcgui.LauncherMenuButton
-            android:id="@+id/download_mods"
+            android:id="@+id/download_mods_button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_66sdp"
             android:background="?android:attr/selectableItemBackground"

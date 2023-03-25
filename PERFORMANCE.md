@@ -1,11 +1,12 @@
 # Performance Guide
-This guide will tech you how to get better performance on PojavLauncher! <br />
+This guide will teach you how to get better performance on PojavLauncher! <br />
 <br />
 NOT DONE! <br />
 
 ## Minecraft settings
 - Snooper: OFF
-- Chunks: 2-6
+- Render Distance: 2-6 Chunks
+- Simulation Distance: 5 Chunks
 - Graphics: Fast
 - Max Framerate: Unlimited
 - Clouds: Off
@@ -16,3 +17,10 @@ NOT DONE! <br />
 - Particles: Decreased
 - Entity Distance: 50%
 - View Bobbing: Off
+
+## PojavLauncher settings (Video settings)
+- Renderer: Holy GL4ES
+- Resolution Scaler: 80%
+- Enable sustained performance mode: On
+- Use alternate surface rendering: On
+- Force enable VSync: On
