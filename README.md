@@ -21,6 +21,7 @@
 
 ## Navigation
 - [New Features](#new-features)
+- [Performance Guide](https://github.com/Raidenxd2/PojavLauncher-community/blob/v3_openjdk/PERFORMANCE.md)
 - [Introduction](#introduction)  
 - [Getting PojavLauncher](#getting-pojavlauncher)
 - [Building](#building) 
