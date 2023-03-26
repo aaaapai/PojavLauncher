@@ -1,4 +1,4 @@
-<H1 align="center">PojavLauncher</H1>
+<H1 align="center">PojavLauncher Community Edition</H1>
 
 <img src="https://github.com/CriticalRange/PojavLauncher/blob/v3_openjdk/app_pojavlauncher/src/main/assets/pojavlauncher.png" align="left" width="130" height="150" alt="PojavLauncher logo">
 
@@ -10,7 +10,7 @@
 ---------
 * From [Boardwalk](https://github.com/zhuowei/Boardwalk)'s ashes here comes PojavLauncher!
 
-* PojavLauncher is a launcher that allows you to play Minecraft: Java Edition on your Android device!
+* PojavLauncher Community Edition is a launcher that allows you to play Minecraft: Java Edition on your Android device!
 
 * It can run almost every version of the Minecraft, allowing you to use .jar only installers to install modloaders like [forge](https://files.minecraftforge.net/), [fabric](http://fabricmc.net/), [optifine](https://optifine.net); Utility and hack clients like [LabyMod](https://www.labymod.net/en), [Wurst](https://www.wurstclient.net/) and much more!
 
@@ -23,7 +23,7 @@
 - [New Features](#new-features)
 - [Performance Guide](https://github.com/Raidenxd2/PojavLauncher-community/blob/v3_openjdk/PERFORMANCE.md)
 - [Introduction](#introduction)  
-- [Getting PojavLauncher](#getting-pojavlauncher)
+- [Getting PojavLauncher Community Edition](#getting-pojavlauncher-community-edition)
 - [Building](#building) 
 - [Current status](#current-status) 
 - [License](#license) 
@@ -38,22 +38,19 @@
 - GL4ES 1.1.5 and zink are back!
 
 ## Introduction 
-* PojavLauncher is a Minecraft: Java Edition launcher for Android and iOS based on [Boardwalk](https://github.com/zhuowei/Boardwalk). 
-* This launcher can launch almost all available Minecraft versions ranging from rd-132211 to 1.19 snapshots (including Combat Test versions). 
+* PojavLauncher Community Edition is a Minecraft: Java Edition launcher for Android and iOS based on [Boardwalk](https://github.com/zhuowei/Boardwalk). 
+* This launcher can launch almost all available Minecraft versions ranging from rd-132211 to 1.20 snapshots (including Combat Test versions). 
 * Modding via Forge and Fabric are also supported. 
-* This repository contains source code for Android. 
-* For iOS/iPadOS, check out [PojavLauncher_iOS](https://github.com/PojavLauncherTeam/PojavLauncher_iOS).
+* This repository contains source code for Android.
 
-## Getting PojavLauncher
+## Getting PojavLauncher Community Edition
 
-You can get PojavLauncher via three methods:
+You can get PojavLauncher Community Edition via two methods:
 
-1. You can get the prebuilt app from [stable releases](https://github.com/PojavLauncherTeam/PojavLauncher/releases) or [automatic builds](https://github.com/PojavLauncherTeam/PojavLauncher/actions).
+1. You can get the prebuilt app from [automatic builds](https://github.com/Raidenxd2/PojavLauncher-community/actions).
 
-2. You can get it from Google Play by clicking on this badge:
-[![Google Play](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=net.kdt.pojavlaunch)
+2. You can [build](#building) from source.
 
-3. You can [build](#building) from source.
 ## Building
 If you want to build from source code, follow the steps below.
 ### Java Runtime Environment (JRE)
@@ -87,7 +84,7 @@ bash scripts/languagelist_updater.sh
 ```
 scripts\languagelist_updater.bat
 ```
-Then, run these commands ~~or build using Android Studio~~.
+Then, run these commands or build using Android Studio.
 
 * Build GLFW stub:
 ```
@@ -122,7 +119,7 @@ Then, run these commands ~~or build using Android Studio~~.
 - Probably more, that's why we have a bug tracker ;) 
 
 ## License
-- PojavLauncher is licensed under [GNU GPLv3](https://github.com/khanhduytran0/PojavLauncher/blob/master/LICENSE).
+- PojavLauncher Community Edition is licensed under [GNU GPLv3](https://github.com/Raidenxd2/PojavLauncher-community/blob/v3_openjdk/LICENSE).
 
 ## Contributing
 Contributions are welcome! We welcome any type of contribution, not only code. For example, you can help the wiki shape up. You can help the [translation](https://crowdin.com/project/pojavlauncher) too!
@@ -131,6 +128,7 @@ Contributions are welcome! We welcome any type of contribution, not only code. F
 Any code change to this repository (or iOS) should be submitted as a pull request. The description should explain what the code does and give steps to execute it.
 
 ## Credits & Third party components and their licenses (if available)
+- [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher) [GNU GPLv3](https://github.com/PojavLauncherTeam/PojavLauncher/blob/v3_openjdk/LICENSE)
 - [Boardwalk](https://github.com/zhuowei/Boardwalk) (JVM Launcher): Unknown License/[Apache License 2.0](https://github.com/zhuowei/Boardwalk/blob/master/LICENSE) or GNU GPLv2.
 - Android Support Libraries: [Apache License 2.0](https://android.googlesource.com/platform/prebuilts/maven_repo/android/+/master/NOTICE.txt).
 - [GL4ES](https://github.com/PojavLauncherTeam/gl4es): [MIT License](https://github.com/ptitSeb/gl4es/blob/master/LICENSE).<br>
