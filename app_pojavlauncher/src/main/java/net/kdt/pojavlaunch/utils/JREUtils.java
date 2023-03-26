@@ -293,15 +293,22 @@ public class JREUtils {
         List<String> userArgs = getJavaArgs(activity);
 
         //Remove arguments that can interfere with the good working of the launcher
-        purgeArg(userArgs,"-Xms");
-        purgeArg(userArgs,"-Xmx");
-        purgeArg(userArgs,"-d32");
-        purgeArg(userArgs,"-d64");
-        purgeArg(userArgs, "-Xint");
-        purgeArg(userArgs, "-Dorg.lwjgl.opengl.libname");
+        if (LauncherPreferences.PREF_ENABLE_JVM_ARGUMENTS_PURGER) {
+            Logger.getInstance().appendToLog("JVM arguments purger enabled!");
+            purgeArg(userArgs,"-Xms");
+            purgeArg(userArgs,"-Xmx");
+            purgeArg(userArgs,"-d32");
+            purgeArg(userArgs,"-d64");
+            purgeArg(userArgs, "-Xint");
+            purgeArg(userArgs, "-Dorg.lwjgl.opengl.libname");
+        }
+        else {
+            // Don't do anything
+            Logger.getInstance().appendToLog("JVM arguments purger disabled (This may cause problems).");
+        }
 
         //Add automatically generated args
-        userArgs.add("-Xms" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
+        userArgs.add("-Xms" + LauncherPreferences.PREF_MINIMUM_RAM_ALLOCATION + "M");
         userArgs.add("-Xmx" + LauncherPreferences.PREF_RAM_ALLOCATION + "M");
         if(LOCAL_RENDERER != null) userArgs.add("-Dorg.lwjgl.opengl.libname=" + graphicsLib);
 

@@ -59,6 +59,8 @@ public class LauncherPreferences {
 
     // Community Edition (Settings)
     public static boolean PREF_ENABLE_FORGESPLASH = false;
+    public static int PREF_MINIMUM_RAM_ALLOCATION;
+    public static boolean PREF_ENABLE_JVM_ARGUMENTS_PURGER = true;
 
 
     public static void loadPreferences(Context ctx) {
@@ -97,7 +99,10 @@ public class LauncherPreferences {
         PREF_GYRO_INVERT_Y = DEFAULT_PREF.getBoolean("gyroInvertY", false);
         PREF_FORCE_VSYNC = DEFAULT_PREF.getBoolean("force_vsync", false);
         PREF_BUTTON_ALL_CAPS = DEFAULT_PREF.getBoolean("buttonAllCaps", true);
+
         PREF_ENABLE_FORGESPLASH = DEFAULT_PREF.getBoolean("enableForgeSplash", false);
+        PREF_MINIMUM_RAM_ALLOCATION = DEFAULT_PREF.getInt("minimum_allocation", (int) findBestRAMAllocation(ctx) / 2);
+        PREF_ENABLE_JVM_ARGUMENTS_PURGER = DEFAULT_PREF.getBoolean("jvm_arguments_purger", true);
 
 /*
         if (PREF_CUSTOM_JAVA_ARGS.isEmpty()) {

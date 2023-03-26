@@ -26,11 +26,29 @@
             app2:seekBarIncrement="10"
             app2:selectable="false"/>
 
+        <net.kdt.pojavlaunch.prefs.CustomSeekBarPreference
+            android:id="@+id/minimum_memory_allocation"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:key="minimum_allocation"
+            android:summary="@string/mcl_minimum_memory_allocation_subtitle"
+            android:title="@string/mcl_minimum_memory_allocation"
+            app2:seekBarIncrement="10"
+            app2:selectable="false"
+            app2:showSeekBarValue="true" />
         <SwitchPreference
             android:defaultValue="true"
             android:key="java_sandbox"
             android:summary="@string/mcl_setting_java_sandbox_subtitle"
             android:title="@string/mcl_setting_java_sandbox" />
+        <SwitchPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="true"
+            android:key="jvm_arguments_purger"
+            android:summary="@string/mcl_jvm_arguments_purger_description"
+            android:title="@string/mcl_jvm_arguments_purger_title" />
 
     </PreferenceCategory>
 

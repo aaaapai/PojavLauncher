@@ -31,9 +31,11 @@
 - [Credits & Third party components and their licenses](#credits--third-party-components-and-their-licenses-if-available)
 
 ## New-Features
+- A mod downloader
 - A Modrinth modpack installer
 - New special buttons (Force Quit/Logs) for custom controls!
 - Spoon.
+- GL4ES 1.1.5 and zink are back!
 
 ## Introduction 
 * PojavLauncher is a Minecraft: Java Edition launcher for Android and iOS based on [Boardwalk](https://github.com/zhuowei/Boardwalk). 
