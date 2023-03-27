@@ -363,7 +363,9 @@
     <string name="mcl_minimum_memory_allocation">Minimum memory allocation</string>
     <string name="mcl_minimum_memory_allocation_subtitle">Controls the minimum amount of memory Minecraft can use.</string>
     <string name="mcl_jvm_arguments_purger_title">JVM arguments purger</string>
-    <string name="mcl_jvm_arguments_purger_description">Disables/Enables the purging of certain JVM arguments that can affect the launcher.</string>
+    <string name="mcl_jvm_arguments_purger_description">Disables/Enables the purging of certain user JVM arguments that can affect the launcher.</string>
+    <string name="mcl_reset_settings_title">Reset settings on next startup</string>
+    <string name="mcl_reset_settings_description">Resets settings on next startup. WARNING: This will delete your settings, accounts, and cache. Please proceed with caution.</string>
 
     <!-- Mod Manager -->
     <string name="main_mod_manager">Mod Manager</string>

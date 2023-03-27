@@ -20,6 +20,7 @@ import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.extra.ExtraConstants;
 import net.kdt.pojavlaunch.extra.ExtraCore;
+import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 
 import java.io.File;
@@ -50,7 +51,6 @@ public class MainMenuFragment extends Fragment {
             return true;
         });
 
-        // mModManagerButton.setOnClickListener(v -> {throw new RuntimeException("Bruh");});
         mModManagerButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), ModManagerMain.class, ModManagerMain.TAG, true, null));
 
         mEditProfileButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), ProfileEditorFragment.class, ProfileEditorFragment.TAG, true, null));
@@ -69,6 +69,10 @@ public class MainMenuFragment extends Fragment {
             Intent sendIntent = Intent.createChooser(shareIntent, "latestlog.txt");
             startActivity(sendIntent);
         });
+
+        if (LauncherPreferences.PREF_RESET_SETTINGS) {
+            Tools.resetSettings(requireActivity());
+        }
 
     }
 

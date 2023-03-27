@@ -19,11 +19,13 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public class FileUtils {
+
+    // Checks if the file exists.
     public static boolean exists(String filePath){
         return new File(filePath).exists();
     }
 
-    // Extracts a file
+    // Extracts a file.
     public static void unzip(File zipFile, File targetDirectory) throws IOException {
         ZipInputStream zis = new ZipInputStream(
                 new BufferedInputStream(new FileInputStream(zipFile)));
@@ -75,6 +77,7 @@ public class FileUtils {
         return sb.toString();
     }
 
+    // Gets the data from a file and puts it into a string.
     public static String getStringFromFile (String filePath) throws IOException {
         File fl = new File(filePath);
         FileInputStream fin = new FileInputStream(fl);
@@ -84,7 +87,8 @@ public class FileUtils {
         return ret;
     }
 
-    //ChatGPT made this lol
+    // ChatGPT made this lol
+    // Copy a directory with all of it's files and folders to another directory.
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static void copyDirectory(File sourceDir, File targetDir) throws IOException {
         if (!targetDir.exists()) {
@@ -96,6 +100,23 @@ public class FileUtils {
                 copyDirectory(file, targetFile);
             } else {
                 Files.copy(file.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }
+        }
+    }
+
+    // Delete a file
+    public static void deleteFile(File file) {
+        file.delete();
+    }
+
+    // Delete ALL files in a folder
+    public static void deleteFilesInFolder(File dir) {
+        if (dir.isDirectory())
+        {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++)
+            {
+                new File(dir, children[i]).delete();
             }
         }
     }

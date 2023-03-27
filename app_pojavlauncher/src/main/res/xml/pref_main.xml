@@ -60,8 +60,4 @@
         android:summary="@string/preference_force_english_description"
         />
 
-
-
-
-
 </PreferenceScreen>

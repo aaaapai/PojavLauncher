@@ -991,6 +991,27 @@ public final class Tools {
 
     }
 
+    // Resets ALL settings, cache, and accounts.
+    public static void resetSettings(Activity activity) {
+        final EditText editText = new EditText(activity);
+        editText.setSingleLine();
+        editText.setHint("WARNING! Resetting your settings will reset ALL settings (including accounts).");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+                .setTitle("Reset Settings")
+                .setNegativeButton(android.R.string.cancel, null)
+                .setView(editText)
+                .setPositiveButton(android.R.string.ok, (di, i) -> {
+                    FileUtils.deleteFile(new File(Tools.DIR_DATA + "/shared_prefs/net.kdt.pojavlaunch.community.debug_preferences.xml"));
+                    FileUtils.deleteFile(new File(Tools.DIR_DATA + "/shared_prefs/pojav_profile.xml"));
+                    FileUtils.deleteFilesInFolder(new File(Tools.DIR_DATA + "/accounts"));
+                    FileUtils.deleteFilesInFolder(new File(Tools.DIR_DATA + "/cache"));
+                    Log.d("PojavLauncher Settings", "Settings deleted, closing app.");
+                    System.exit(0);
+                });
+        builder.show();
+    }
+
     public static void installMod(Activity activity, boolean customJavaArgs) {
         if (MultiRTUtils.getExactJreName(8) == null) {
             Toast.makeText(activity, R.string.multirt_nojava8rt, Toast.LENGTH_LONG).show();
