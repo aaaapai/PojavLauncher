@@ -120,4 +120,10 @@ public class FileUtils {
             }
         }
     }
+
+    public static void createDirectory(File dir) throws IOException {
+        if (!dir.mkdirs()) {
+            throw new IOException("Could not create dir \"" + dir.getName() + "\"");
+        }
+    }
 }

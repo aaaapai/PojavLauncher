@@ -41,13 +41,15 @@ public class ModManagerMain extends Fragment {
 
         Button mInstallMrpackButton = view.findViewById(R.id.install_mrpack_button);
         Button mDownloadModsButton = view.findViewById(R.id.download_mods_button);
+        Button mInstallModButton = view.findViewById(R.id.install_mod_button);
 
         mInstallMrpackButton.setOnClickListener(v -> runMrpackInstaller());
         mDownloadModsButton.setOnClickListener(v -> projectSearchFromAPI());
+        mInstallModButton.setOnClickListener(v -> startInstallMod());
 
     }
 
-    public void projectSearchFromAPI() {
+    private void projectSearchFromAPI() {
 
         String modrinthProjectSearchJSON = null;
         try {
@@ -59,6 +61,17 @@ public class ModManagerMain extends Fragment {
 
         Log.d("Mod Downloader", "modrinthProjectSearchJSON: " + modrinthProjectSearchJSON);
 
+    }
+
+    private void runMrpackInstaller() {
+        if (ProgressKeeper.getTaskCount() == 0)
+            Tools.installModpack(requireActivity());
+        else
+            Toast.makeText(requireContext(), R.string.tasks_ongoing, Toast.LENGTH_LONG).show();
+    }
+
+    private void startInstallMod() {
+        Tools.installModREAL(requireActivity());
     }
 
     public static ModManagerMain newInstance(String param1, String param2) {
@@ -78,13 +91,6 @@ public class ModManagerMain extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_mod_manager_main, container, false);
-    }
-
-    private void runMrpackInstaller() {
-        if (ProgressKeeper.getTaskCount() == 0)
-            Tools.installModpack(requireActivity());
-        else
-            Toast.makeText(requireContext(), R.string.tasks_ongoing, Toast.LENGTH_LONG).show();
     }
 
 }

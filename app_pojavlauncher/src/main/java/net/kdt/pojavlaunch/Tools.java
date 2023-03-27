@@ -89,6 +89,7 @@ public final class Tools {
     public static final String LIBNAME_OPTIFINE = "optifine:OptiFine";
     public static final int RUN_MOD_INSTALLER = 2050;
     public static final int RUN_MRPACK_INSTALLER = 2060;
+    public static final int RUN_MOD_REAL_INSTALLER = 2070;
 
 
     private static File getPojavStorageRoot(Context ctx) {
@@ -1010,6 +1011,55 @@ public final class Tools {
                     System.exit(0);
                 });
         builder.show();
+    }
+
+    // Make the user select the mod jar file.
+    public static void installModREAL(Activity activity) {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension("jar");
+        if(mimeType == null) mimeType = "*/*";
+        intent.setType(mimeType);
+        activity.startActivityForResult(intent, RUN_MOD_REAL_INSTALLER);
+    }
+
+    public static void launchModREALInstaller(Activity activity, @NonNull Intent data) {
+        sExecutorService.execute(() -> {
+            try {
+
+                // Get current Minecraft profile.
+                MinecraftProfile minecraftProfile;
+                if(LauncherProfiles.mainProfileJson == null) LauncherProfiles.update();
+                minecraftProfile = LauncherProfiles.mainProfileJson.profiles.get(LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE,""));
+
+                // Check if the Minecraft profile is null.
+                if (minecraftProfile == null) {
+                    Tools.showError(activity, new NullPointerException("The Minecraft profile is null!"));
+                    Log.e("Mod REAL Installer", "The Minecraft profile is null!");
+                    return;
+                }
+
+                // Create mods dir
+                FileUtils.createDirectory(new File(getGameDirPath(minecraftProfile) + "/mods"));
+
+                // Copy the mod to the current profile's gameDir.
+                final Uri uri = data.getData();
+                final String name = getFileName(activity, uri);
+                final File modFile = new File(getGameDirPath(minecraftProfile) + "/mods", name);
+                FileOutputStream fos = new FileOutputStream(modFile);
+                InputStream input = activity.getContentResolver().openInputStream(uri);
+                IOUtils.copy(input, fos);
+                input.close();
+                fos.close();
+
+                // Pop up a toast saying that the mod has been installed.
+                Looper.prepare();
+                Toast.makeText(activity, "Mod \"" + name + "\" installed!", Toast.LENGTH_LONG).show();
+            }catch(IOException e) {
+                Tools.showError(activity, e);
+            }
+        });
+
     }
 
     public static void installMod(Activity activity, boolean customJavaArgs) {

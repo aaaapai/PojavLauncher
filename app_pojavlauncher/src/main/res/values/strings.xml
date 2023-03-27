@@ -211,7 +211,7 @@
     <string name="customctrl_export">Export control</string>
 
     <string name="main_share_logs">Share log file</string>
-    <string name="main_install_jar_file">Install .jar</string>
+    <string name="main_install_jar_file">Launch mod loader installer</string>
     <string name="main_options">Options</string>
     <string name="main_play">Play</string>
     <string name="main_welcome">Welcome, %s</string>
@@ -372,4 +372,5 @@
     <string name="modmanager_install_curseforgemodpack">Install Curseforge modpack</string>
     <string name="modmanager_install_mrpack">Install Modrinth modpack (mrpack)</string>
     <string name="modmanager_download_mods">Download mods</string>
+    <string name="modmanager_install_mod">Install mod</string>
 </resources>
