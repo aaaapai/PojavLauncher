@@ -1017,9 +1017,9 @@ public final class Tools {
     public static void installModREAL(Activity activity) {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension("jar");
-        if(mimeType == null) mimeType = "*/*";
-        intent.setType(mimeType);
+        String [] mimeType = {"application/java-archive", "application/zip"};
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeType);
         activity.startActivityForResult(intent, RUN_MOD_REAL_INSTALLER);
     }
 

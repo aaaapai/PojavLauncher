@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -27,15 +28,15 @@ public class FileUtils {
 
     // Extracts a file.
     public static void unzip(File zipFile, File targetDirectory) throws IOException {
-        ZipInputStream zis = new ZipInputStream(
-                new BufferedInputStream(new FileInputStream(zipFile)));
-        try {
+        try (ZipInputStream zis = new ZipInputStream(
+                new BufferedInputStream(new FileInputStream(zipFile)))) {
             ZipEntry ze;
             int count;
             byte[] buffer = new byte[8192];
             while ((ze = zis.getNextEntry()) != null) {
                 File file = new File(targetDirectory, ze.getName());
                 File dir = ze.isDirectory() ? file : file.getParentFile();
+                assert dir != null;
                 if (!dir.isDirectory() && !dir.mkdirs())
                     throw new FileNotFoundException("Failed to ensure directory: " +
                             dir.getAbsolutePath());
@@ -48,14 +49,7 @@ public class FileUtils {
                 } finally {
                     fout.close();
                 }
-            /* if time should be restored as well
-            long time = ze.getTime();
-            if (time > 0)
-                file.setLastModified(time);
-            */
             }
-        } finally {
-            zis.close();
         }
     }
 
@@ -64,7 +58,7 @@ public class FileUtils {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
         String line = null;
-        Boolean firstLine = true;
+        boolean firstLine = true;
         while ((line = reader.readLine()) != null) {
             if(firstLine){
                 sb.append(line);
@@ -82,7 +76,6 @@ public class FileUtils {
         File fl = new File(filePath);
         FileInputStream fin = new FileInputStream(fl);
         String ret = convertStreamToString(fin);
-        //Make sure you close all streams.
         fin.close();
         return ret;
     }
@@ -94,7 +87,7 @@ public class FileUtils {
         if (!targetDir.exists()) {
             targetDir.mkdir();
         }
-        for (File file : sourceDir.listFiles()) {
+        for (File file : Objects.requireNonNull(sourceDir.listFiles())) {
             File targetFile = new File(targetDir.getAbsolutePath() + File.separator + file.getName());
             if (file.isDirectory()) {
                 copyDirectory(file, targetFile);
@@ -114,16 +107,19 @@ public class FileUtils {
         if (dir.isDirectory())
         {
             String[] children = dir.list();
-            for (int i = 0; i < children.length; i++)
+            for (int i = 0; i < Objects.requireNonNull(children).length; i++)
             {
                 new File(dir, children[i]).delete();
             }
         }
     }
 
+    // Create a directory and check if it already exists.
     public static void createDirectory(File dir) throws IOException {
-        if (!dir.mkdirs()) {
-            throw new IOException("Could not create dir \"" + dir.getName() + "\"");
+        if (!dir.exists()) {
+            if (!dir.mkdirs()) {
+                throw new IOException("Could not create dir \"" + dir.getName() + "\"");
+            }
         }
     }
 }
