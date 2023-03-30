@@ -1,4 +1,4 @@
-package net.kdt.pojavlaunch.mod;
+package net.kdt.pojavlaunch.mod.modrinth;
 
 import android.os.StrictMode;
 

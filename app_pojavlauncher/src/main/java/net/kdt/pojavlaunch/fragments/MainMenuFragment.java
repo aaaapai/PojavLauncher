@@ -15,15 +15,13 @@ import androidx.fragment.app.Fragment;
 
 
 import net.kdt.pojavlaunch.CustomControlsActivity;
-import net.kdt.pojavlaunch.ModManagerMain;
+import net.kdt.pojavlaunch.mod.ModManagerMain;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.extra.ExtraConstants;
 import net.kdt.pojavlaunch.extra.ExtraCore;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
-
-import java.io.File;
 
 public class MainMenuFragment extends Fragment {
     public static final String TAG = "MainMenuFragment";

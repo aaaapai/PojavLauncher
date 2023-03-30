@@ -31,6 +31,7 @@ import net.kdt.pojavlaunch.extra.ExtraCore;
 import net.kdt.pojavlaunch.extra.ExtraListener;
 
 import net.kdt.pojavlaunch.fragments.SelectAuthFragment;
+import net.kdt.pojavlaunch.mod.ModTools;
 import net.kdt.pojavlaunch.multirt.MultiRTConfigDialog;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceFragment;
@@ -210,17 +211,17 @@ public class LauncherActivity extends BaseActivity {
             Tools.launchModInstaller(this, data);
             return;
         }
-        if(requestCode == Tools.RUN_MRPACK_INSTALLER && data != null){
+        if(requestCode == ModTools.RUN_MRPACK_INSTALLER && data != null){
             try {
-                Tools.launchModpackInstaller(this, data);
+                ModTools.launchModpackInstaller(this, data);
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
             return;
         }
-        if (requestCode == Tools.RUN_MOD_REAL_INSTALLER && data != null) {
-            Tools.launchModREALInstaller(this, data);
+        if (requestCode == ModTools.RUN_MOD_REAL_INSTALLER && data != null) {
+            ModTools.launchModREALInstaller(this, data);
             return;
         }
         if(requestCode == MultiRTConfigDialog.MULTIRT_PICK_RUNTIME && data != null){

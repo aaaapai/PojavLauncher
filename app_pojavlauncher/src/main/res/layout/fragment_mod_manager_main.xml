@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ModManagerMain">
+    tools:context=".mod.ModManagerMain">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
             android:id="@+id/_background_display_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/background_bottom_bar"
+            android:background="@color/background_app"
             android:translationZ="-1dp"
 
             app:layout_constraintBottom_toBottomOf="parent" />

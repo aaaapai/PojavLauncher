@@ -1,6 +1,5 @@
-package net.kdt.pojavlaunch;
+package net.kdt.pojavlaunch.mod;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,18 +13,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import net.kdt.pojavlaunch.mod.ModrinthAPI;
-import net.kdt.pojavlaunch.mod.ModrinthProjectType;
-import net.kdt.pojavlaunch.mod.ModrinthSearchCategories;
+import net.kdt.pojavlaunch.R;
+import net.kdt.pojavlaunch.Tools;
+import net.kdt.pojavlaunch.mod.modrinth.ModrinthAPI;
+import net.kdt.pojavlaunch.mod.modrinth.ModrinthProjectType;
+import net.kdt.pojavlaunch.mod.modrinth.ModrinthSearchCategories;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 
 import java.io.IOException;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ModManagerMain#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ModManagerMain extends Fragment {
 
     public static final String TAG = "ModMenuMainFragment";
@@ -65,13 +61,13 @@ public class ModManagerMain extends Fragment {
 
     private void runMrpackInstaller() {
         if (ProgressKeeper.getTaskCount() == 0)
-            Tools.installModpack(requireActivity());
+            ModTools.installModpack(requireActivity());
         else
             Toast.makeText(requireContext(), R.string.tasks_ongoing, Toast.LENGTH_LONG).show();
     }
 
     private void startInstallMod() {
-        Tools.installModREAL(requireActivity());
+        ModTools.installModREAL(requireActivity());
     }
 
     public static ModManagerMain newInstance(String param1, String param2) {
