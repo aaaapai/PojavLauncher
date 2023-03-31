@@ -1,17 +1,14 @@
 package net.kdt.pojavlaunch.mod;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
 
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
@@ -22,19 +19,14 @@ import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 
 import java.io.IOException;
 
-public class ModManagerMain extends Fragment {
+public class ModManagerMainFragment extends Fragment {
 
     public static final String TAG = "ModMenuMainFragment";
 
-    public ModManagerMain() {
-        // Required empty public constructor
-        super(R.layout.fragment_mod_manager_main);
-
-    }
+    public ModManagerMainFragment() { super(R.layout.fragment_mod_manager_main); }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         Button mInstallMrpackButton = view.findViewById(R.id.install_mrpack_button);
         Button mDownloadModsButton = view.findViewById(R.id.download_mods_button);
         Button mInstallModButton = view.findViewById(R.id.install_mod_button);
@@ -70,23 +62,14 @@ public class ModManagerMain extends Fragment {
         ModTools.installModREAL(requireActivity());
     }
 
-    public static ModManagerMain newInstance(String param1, String param2) {
-        ModManagerMain fragment = new ModManagerMain();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mod_manager_main, container, false);
-    }
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//    }
+//
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        return inflater.inflate(R.layout.fragment_mod_manager_main, container, false);
+//    }
 
 }

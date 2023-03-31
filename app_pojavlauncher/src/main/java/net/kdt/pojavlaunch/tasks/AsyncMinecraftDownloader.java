@@ -111,6 +111,7 @@ public class AsyncMinecraftDownloader {
                     outLib = new File(Tools.DIR_GAME_NEW, verInfo.logging.client.file.id);
                 }
                 if (outLib.exists() && !useLocal) {
+                    Log.d("PojavLauncher", "PREF_CHECK_LIBRARY_SHA" + LauncherPreferences.PREF_CHECK_LIBRARY_SHA);
                     if(LauncherPreferences.PREF_CHECK_LIBRARY_SHA) {
                         if(!Tools.compareSHA1(outLib,verInfo.logging.client.file.sha1)) {
                             outLib.delete();

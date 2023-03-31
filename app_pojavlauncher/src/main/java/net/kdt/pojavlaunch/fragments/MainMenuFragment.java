@@ -13,13 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-
 import net.kdt.pojavlaunch.CustomControlsActivity;
-import net.kdt.pojavlaunch.mod.ModManagerMain;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.extra.ExtraConstants;
 import net.kdt.pojavlaunch.extra.ExtraCore;
+import net.kdt.pojavlaunch.mod.ModManagerMainFragment;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 
@@ -49,7 +48,7 @@ public class MainMenuFragment extends Fragment {
             return true;
         });
 
-        mModManagerButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), ModManagerMain.class, ModManagerMain.TAG, true, null));
+        mModManagerButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), ModManagerMainFragment.class, ModManagerMainFragment.TAG, true, null));
 
         mEditProfileButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), ProfileEditorFragment.class, ProfileEditorFragment.TAG, true, null));
 

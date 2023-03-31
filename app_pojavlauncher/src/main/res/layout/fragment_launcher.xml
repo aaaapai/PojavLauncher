@@ -56,6 +56,16 @@
 		/>
 
 
+	<com.kdt.mcgui.LauncherMenuButton
+		android:id="@+id/mod_manager_button"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/_66sdp"
+		android:background="?android:attr/selectableItemBackground"
+		android:drawableStart="@drawable/modrinth_logo"
+		android:text="@string/main_mod_manager"
+
+		app:layout_constraintTop_toBottomOf="@id/share_logs_button" />
+
 	<com.kdt.mcgui.mcVersionSpinner
 		android:id="@+id/mc_version_spinner"
 		android:layout_width="0dp"
