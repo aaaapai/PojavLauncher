@@ -147,4 +147,5 @@ dependencies {
     implementation 'com.github.PojavLauncherTeam:exp4j:master-SNAPSHOT'
     // implementation 'net.sourceforge.streamsupport:streamsupport-cfuture:1.7.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.cardview:cardview:1.0.0'
 }

@@ -12,5 +12,10 @@
             android:entries="@array/hack_gles_shrink"
             app2:useSimpleSummaryProvider="true"/>
 
+        <SwitchPreferenceCompat
+            android:key="dump_shaders"
+            android:title="@string/preference_shader_dump_title"
+            android:summary="@string/preference_shader_dump_description" />
+
     </PreferenceCategory>
 </PreferenceScreen>

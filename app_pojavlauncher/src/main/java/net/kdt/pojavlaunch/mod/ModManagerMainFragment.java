@@ -32,7 +32,8 @@ public class ModManagerMainFragment extends Fragment {
         Button mInstallModButton = view.findViewById(R.id.install_mod_button);
 
         mInstallMrpackButton.setOnClickListener(v -> runMrpackInstaller());
-        mDownloadModsButton.setOnClickListener(v -> projectSearchFromAPI());
+        // mDownloadModsButton.setOnClickListener(v -> projectSearchFromAPI());
+        mDownloadModsButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), ModManagerModDownloader.class, ModManagerModDownloader.TAG, true, null));
         mInstallModButton.setOnClickListener(v -> startInstallMod());
 
     }

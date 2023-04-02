@@ -5,22 +5,41 @@ import static net.kdt.pojavlaunch.Architecture.is64BitsDevice;
 import static net.kdt.pojavlaunch.Tools.LOCAL_RENDERER;
 import static net.kdt.pojavlaunch.Tools.NATIVE_LIB_DIR;
 import static net.kdt.pojavlaunch.Tools.currentDisplayMetrics;
+import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_DUMP_SHADERS;
 
-import android.app.*;
-import android.content.*;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.os.Build;
-import android.system.*;
-import android.util.*;
+import android.system.ErrnoException;
+import android.system.Os;
+import android.util.ArrayMap;
+import android.util.Log;
 import android.widget.Toast;
 
-import com.oracle.dalvik.*;
-import java.io.*;
-import java.util.*;
-import net.kdt.pojavlaunch.*;
+import com.oracle.dalvik.VMLauncher;
+
+import net.kdt.pojavlaunch.Architecture;
+import net.kdt.pojavlaunch.Logger;
+import net.kdt.pojavlaunch.MainActivity;
+import net.kdt.pojavlaunch.R;
+import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.extra.ExtraConstants;
 import net.kdt.pojavlaunch.extra.ExtraCore;
-import net.kdt.pojavlaunch.prefs.*;
-import org.lwjgl.glfw.*;
+import net.kdt.pojavlaunch.prefs.LauncherPreferences;
+
+import org.lwjgl.glfw.CallbackBridge;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
@@ -200,6 +219,9 @@ public class JREUtils {
         // Fix white color on banner and sheep, since GL4ES 1.1.5
         envMap.put("LIBGL_NORMALIZE", "1");
 
+        if(PREF_DUMP_SHADERS)
+            envMap.put("LIBGL_VGPU_DUMP", "1");
+
         // The OPEN GL version is changed according
         envMap.put("LIBGL_ES", (String) ExtraCore.getValue(ExtraConstants.OPEN_GL_VERSION));
 
@@ -276,6 +298,7 @@ public class JREUtils {
         // return ldLibraryPath;
     }
 
+    @SuppressLint("StringFormatInvalid")
     public static int launchJavaVM(final Activity activity, String gameDirectory, final List<String> JVMArgs) throws Throwable {
         JREUtils.relocateLibPath();
         // For debugging only!
@@ -469,21 +492,22 @@ public class JREUtils {
                 String parsedSubString = args.substring(start, end);
                 args = args.replace(parsedSubString, "");
 
-                //Check if two args aren't bundled together by mistake
-                if(parsedSubString.indexOf('=') == parsedSubString.lastIndexOf('=')) {
-                    int arraySize = parsedArguments.size();
-                    if(arraySize > 0){
-                        String lastString = parsedArguments.get(arraySize - 1);
-                        // Looking for list elements
-                        if(lastString.charAt(lastString.length() - 1) == ',' ||
-                                parsedSubString.contains(",")){
-                            parsedArguments.set(arraySize - 1, lastString + parsedSubString);
-                            continue;
-                        }
-                    }
-                    parsedArguments.add(parsedSubString);
-                }
-                else Log.w("JAVA ARGS PARSER", "Removed improper arguments: " + parsedSubString);
+                // Check if two args aren't bundled together by mistake
+                // Removed since people will need the spacing (check your jvm arguments for mistakes!)
+//                if(parsedSubString.indexOf('=') == parsedSubString.lastIndexOf('=')) {
+//                    int arraySize = parsedArguments.size();
+//                    if(arraySize > 0){
+//                        String lastString = parsedArguments.get(arraySize - 1);
+//                        // Looking for list elements
+//                        if(lastString.charAt(lastString.length() - 1) == ',' ||
+//                                parsedSubString.contains(",")){
+//                            parsedArguments.set(arraySize - 1, lastString + parsedSubString);
+//                            continue;
+//                        }
+//                    }
+//                    parsedArguments.add(parsedSubString);
+//                }
+//                else Log.w("JAVA ARGS PARSER", "Removed improper arguments: " + parsedSubString);
             }
         }
         return parsedArguments;
