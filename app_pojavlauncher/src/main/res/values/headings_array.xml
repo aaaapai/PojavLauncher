@@ -5,7 +5,6 @@
         <item name="5">@string/mcl_setting_renderer_virgl</item>
         <item name="6">@string/mcl_setting_renderer_angle</item>
         <item name="7">@string/mcl_setting_renderer_gl4es115</item>
-        <item name="8">@string/mcl_setting_renderer_vulkan_zink</item>
     </string-array>
 
     <string-array name="menu_customcontrol">
@@ -39,7 +38,6 @@
         <item>opengles3_virgl</item> <!-- virglrenderer with OpenGL ES 3 -->
         <item>opengles3_desktopgl_angle_vulkan</item>
         <item>opengles115</item> <!-- GL4ES 1.1.5  -->
-        <item>vulkan_zink</item> <!-- zink was left in the files so... -->
     </string-array>
 
     <string-array name="hack_gles_shrink">
