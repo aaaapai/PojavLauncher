@@ -32,6 +32,7 @@ import com.kdt.DefocusableScrollView;
 
 import net.kdt.pojavlaunch.EfficientAndroidLWJGLKeycode;
 import net.kdt.pojavlaunch.R;
+import net.kdt.pojavlaunch.TranslateableArrayAdapter;
 import net.kdt.pojavlaunch.colorselector.ColorSelector;
 import net.kdt.pojavlaunch.customcontrols.ControlData;
 import net.kdt.pojavlaunch.customcontrols.ControlDrawerData;
@@ -74,8 +75,8 @@ public class EditControlPopup {
     protected EditText mNameEditText, mWidthEditText, mHeightEditText;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     protected Switch mToggleSwitch, mPassthroughSwitch, mSwipeableSwitch;
-    protected Spinner mOrientationSpinner;
-    protected TextView[] mKeycodeTextviews = new TextView[4];
+    protected Spinner mOrientationSpinner, mAutoActuationSpinner;
+    protected final Spinner[] mKeycodeSpinners = new Spinner[4];
     protected SeekBar mStrokeWidthSeekbar, mCornerRadiusSeekbar, mAlphaSeekbar;
     protected TextView mStrokePercentTextView, mCornerRadiusPercentTextView, mAlphaPercentTextView;
     protected TextView mSelectBackgroundColor, mSelectStrokeColor;
@@ -87,8 +88,7 @@ public class EditControlPopup {
     private boolean mDisplayingColor = false;
     private ControlInterface mCurrentlyEditedButton;
     // Decorative textviews
-    private TextView mOrientationTextView, mMappingTextView, mNameTextView,
-            mCornerRadiusTextView, mVisibilityTextView, mSizeTextview, mSizeXTextView;
+    private TextView mOrientationTextView, mAutoActuationTextView, mMappingTextView, mNameTextView, mCornerRadiusTextView;
 
 
     public EditControlPopup(Context context, ViewGroup parent) {
@@ -242,6 +242,14 @@ public class EditControlPopup {
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
 
         mOrientationSpinner.setAdapter(adapter);
+
+        // Automatic actuation modes spinner
+        ArrayAdapter<ControlDrawerData.ActuationMode> actuationAdapter =
+                new TranslateableArrayAdapter<>(mScrollView.getContext(), android.R.layout.simple_spinner_item);
+        actuationAdapter.addAll(ControlDrawerData.getActuationModes());
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
+
+        mAutoActuationSpinner.setAdapter(actuationAdapter);
     }
 
     private void setDefaultVisibilitySetting() {
@@ -263,6 +271,8 @@ public class EditControlPopup {
         setDefaultVisibilitySetting();
         mOrientationTextView.setVisibility(GONE);
         mOrientationSpinner.setVisibility(GONE);
+        mAutoActuationTextView.setVisibility(GONE);
+        mAutoActuationSpinner.setVisibility(GONE);
 
         mNameEditText.setText(data.name);
         mWidthEditText.setText(String.valueOf(data.getWidth()));
@@ -300,6 +310,8 @@ public class EditControlPopup {
 
         mOrientationSpinner.setSelection(
                 ControlDrawerData.orientationToInt(data.orientation));
+        mAutoActuationSpinner.setSelection(
+                ControlDrawerData.actuationModeToInt(data.actuationMode));
 
         mMappingTextView.setVisibility(GONE);
         for (int i = 0; i < mKeycodeSpinners.length; i++) {
@@ -309,6 +321,8 @@ public class EditControlPopup {
 
         mOrientationTextView.setVisibility(VISIBLE);
         mOrientationSpinner.setVisibility(VISIBLE);
+        mAutoActuationTextView.setVisibility(VISIBLE);
+        mAutoActuationSpinner.setVisibility(VISIBLE);
 
         mSwipeableSwitch.setVisibility(View.GONE);
         mPassthroughSwitch.setVisibility(View.GONE);
@@ -375,6 +389,7 @@ public class EditControlPopup {
         mKeycodeTextviews[2] = mScrollView.findViewById(R.id.mapping_3_textview);
         mKeycodeTextviews[3] = mScrollView.findViewById(R.id.mapping_4_textview);
         mOrientationSpinner = mScrollView.findViewById(R.id.editOrientation_spinner);
+        mAutoActuationSpinner = mScrollView.findViewById(R.id.editAutoActuation_spinner);
         mStrokeWidthSeekbar = mScrollView.findViewById(R.id.editStrokeWidth_seekbar);
         mCornerRadiusSeekbar = mScrollView.findViewById(R.id.editCornerRadius_seekbar);
         mAlphaSeekbar = mScrollView.findViewById(R.id.editButtonOpacity_seekbar);
@@ -389,6 +404,7 @@ public class EditControlPopup {
         //Decorative stuff
         mMappingTextView = mScrollView.findViewById(R.id.editMapping_textView);
         mOrientationTextView = mScrollView.findViewById(R.id.editOrientation_textView);
+        mAutoActuationTextView = mScrollView.findViewById(R.id.editAutoActuation_textView);
         mNameTextView = mScrollView.findViewById(R.id.editName_textView);
         mCornerRadiusTextView = mScrollView.findViewById(R.id.editCornerRadius_textView);
         mVisibilityTextView = mScrollView.findViewById(R.id.visibility_textview);
@@ -577,9 +593,19 @@ public class EditControlPopup {
             mCurrentlyEditedButton.getProperties().displayInGame = isChecked;
         });
 
-        mDisplayInMenuCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (internalChanges) return;
-            mCurrentlyEditedButton.getProperties().displayInMenu = isChecked;
+        mAutoActuationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(mCurrentlyEditedButton instanceof ControlDrawer) {
+                    ControlDrawer controlDrawer = (ControlDrawer) mCurrentlyEditedButton;
+                    controlDrawer.drawerData.actuationMode = ControlDrawerData.intToActuationMode(mAutoActuationSpinner.getSelectedItemPosition());
+                    // don't need to sync because actuation mode only impacts the drawer itself
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
         });
 
         mSelectStrokeColor.setOnClickListener(v -> {
