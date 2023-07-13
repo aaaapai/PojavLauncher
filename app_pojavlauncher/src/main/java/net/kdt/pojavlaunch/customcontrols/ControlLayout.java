@@ -1,6 +1,7 @@
 package net.kdt.pojavlaunch.customcontrols;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
+import static net.kdt.pojavlaunch.MainActivity.mControlLayout;
 import static net.kdt.pojavlaunch.Tools.currentDisplayMetrics;
 
 import android.annotation.SuppressLint;
@@ -27,6 +28,7 @@ import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.customcontrols.buttons.ControlButton;
 import net.kdt.pojavlaunch.customcontrols.buttons.ControlDrawer;
 import net.kdt.pojavlaunch.customcontrols.buttons.ControlInterface;
+import net.kdt.pojavlaunch.customcontrols.buttons.ControlJoystick;
 import net.kdt.pojavlaunch.customcontrols.buttons.ControlSubButton;
 import net.kdt.pojavlaunch.customcontrols.handleview.ActionRow;
 import net.kdt.pojavlaunch.customcontrols.handleview.ControlHandleView;
@@ -58,10 +60,12 @@ public class ControlLayout extends FrameLayout {
 
 	public ControlLayout(Context ctx) {
 		super(ctx);
+		setClipChildren(false);
 	}
 
 	public ControlLayout(Context ctx, AttributeSet attrs) {
 		super(ctx, attrs);
+		setClipChildren(false);
 	}
 
 
@@ -106,6 +110,12 @@ public class ControlLayout extends FrameLayout {
 			ControlDrawer drawer = addDrawerView(drawerData);
 			if(mModifiable) drawer.areButtonsVisible = true;
 		}
+
+		// Joystick(s)
+		for(ControlData joystick : mLayout.mJoystickDataList){
+			addJoystickView(joystick);
+		}
+
 
 		mLayout.scaledAt = LauncherPreferences.PREF_BUTTONSIZE;
 
@@ -186,6 +196,16 @@ public class ControlLayout extends FrameLayout {
 		setModified(true);
 	}
 
+	// JOYSTICK BUTTON
+	public void addJoystickButton(ControlData data){
+		mLayout.mJoystickDataList.add(data);
+		addJoystickView(data);
+	}
+
+	private void addJoystickView(ControlData data){
+		addView(new ControlJoystick(this, data));
+	}
+
 
 	private void removeAllButtons() {
 		for(ControlInterface button : getButtonChildren()){
@@ -225,10 +245,19 @@ public class ControlLayout extends FrameLayout {
 	}
 
 	public void setModifiable(boolean isModifiable) {
+		// Hack to allow joystick free placement and resize while seeing the forward lock
+		setClipChildren(isModifiable);
+
 		if(!isModifiable && mModifiable){
 			removeEditWindow();
 		}
 		mModifiable = isModifiable;
+		if(isModifiable){
+			// In edit mode, all controls have to be shown
+			for(ControlInterface button : getButtonChildren()){
+				button.setVisible(true);
+			}
+		}
 	}
 
 	public boolean getModifiable(){
