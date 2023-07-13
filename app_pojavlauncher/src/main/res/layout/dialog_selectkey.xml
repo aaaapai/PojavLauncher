@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:custom="http://schemas.android.com/apk/res-auto"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#FFFFFF"
+	android:padding="15dp">
+
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<LinearLayout
+			android:id="@+id/view_special"
+			custom:layout_constraintWidth_percent="0.7"
+			custom:layout_constraintLeft_toLeftOf="parent"
+			custom:layout_constraintTop_toTopOf="parent"
+			android:orientation="horizontal"
+			android:layout_width="0dp"
+			android:layout_height="match_parent">
+
+			<com.mio.MioSelectorButton
+				android:layout_weight="1"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="鼠标左"
+				custom:key="鼠标左"
+				style="@style/selecterButtonStyle"
+				android:textSize="15sp"/>
+
+			<com.mio.MioSelectorButton
+				android:layout_weight="1"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="鼠标中"
+				custom:key="鼠标中"
+				style="@style/selecterButtonStyle"
+				android:textSize="15sp"/>
+
+			<com.mio.MioSelectorButton
+				android:layout_weight="1"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="鼠标右"
+				custom:key="鼠标右"
+				style="@style/selecterButtonStyle"
+				android:textSize="15sp"/>
+
+			<com.mio.MioSelectorButton
+				android:layout_weight="1"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="滚轮上"
+				custom:key="滚轮上"
+				style="@style/selecterButtonStyle"
+				android:textSize="15sp"/>
+
+			<com.mio.MioSelectorButton
+				android:layout_weight="1"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="滚轮下"
+				style="@style/selecterButtonStyle"
+				custom:key="滚轮下"
+				android:textSize="15sp"/>
+
+			<com.mio.MioSelectorButton
+				android:layout_weight="1"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="鼠标"
+				custom:key="鼠标"
+				style="@style/selecterButtonStyle"
+				android:textSize="15sp"/>
+
+			<com.mio.MioSelectorButton
+				android:layout_weight="1"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="GUI"
+				custom:key="GUI"
+				style="@style/selecterButtonStyle"
+				android:textSize="15sp"/>
+
+			<com.mio.MioSelectorButton
+				android:layout_weight="1"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="菜单"
+				custom:key="菜单"
+				style="@style/selecterButtonStyle"
+				android:textSize="15sp"/>
+
+			<com.mio.MioSelectorButton
+				android:layout_weight="1"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="键盘"
+				custom:key="键盘"
+				style="@style/selecterButtonStyle"
+				android:textSize="15sp"/>
+
+			<com.mio.MioSelectorButton
+				android:layout_weight="1"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="空"
+				custom:key="UNKNOWN"
+				style="@style/selecterButtonStyle"
+				android:textSize="15sp"/>
+
+		</LinearLayout>
+
+		<LinearLayout
+			custom:layout_constraintRight_toRightOf="parent"
+			custom:layout_constraintTop_toTopOf="parent"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content">
+
+			<TextView
+				android:layout_margin="5dp"
+				android:textColor="#000000"
+				android:id="@+id/dialog_selectkey_text_key"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+
+			<Button
+				android:id="@+id/dialog_selectkey_btn_ok"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="确定"
+				style="@style/selecterButtonStyle"
+				android:textSize="18sp"/>
+
+			<Button
+				android:id="@+id/dialog_selectkey_btn_cancel"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="取消"
+				style="@style/selecterButtonStyle"
+				android:textSize="18sp"/>
+
+		</LinearLayout>
+
+	</androidx.constraintlayout.widget.ConstraintLayout>
+
+	<include
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		layout="@layout/view_keyboard"/>
+
+</LinearLayout>
+

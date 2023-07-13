@@ -30,7 +30,7 @@ public class CustomControls {
 	// Generate default control
 	public CustomControls(Context ctx) {
 		this();
-		this.mControlDataList.add(new ControlData(ControlData.getSpecialButtons()[0])); // Keyboard
+		this.mControlDataList.add(new ControlData(ControlData.getSpecialButtons()[0])); // LwjglGlfwKey
 		this.mControlDataList.add(new ControlData(ControlData.getSpecialButtons()[1])); // GUI
 		this.mControlDataList.add(new ControlData(ControlData.getSpecialButtons()[2])); // Primary Mouse mControlDataList
 		this.mControlDataList.add(new ControlData(ControlData.getSpecialButtons()[3])); // Secondary Mouse mControlDataList

@@ -51,6 +51,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:screenOrientation="sensorPortrait"
             android:name=".LauncherActivity"
             android:label="@string/app_short_name" />
         <activity

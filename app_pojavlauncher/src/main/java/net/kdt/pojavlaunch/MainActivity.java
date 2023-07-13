@@ -88,6 +88,13 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         minecraftProfile = LauncherProfiles.getCurrentProfile();
+        if (!new File(Tools.getGameDirPath(minecraftProfile),"options.txt").exists()){
+            try {
+                Tools.copyAssetFile(this, "options.txt", Tools.getGameDirPath(minecraftProfile).getAbsolutePath(), false);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         MCOptionUtils.load(Tools.getGameDirPath(minecraftProfile).getAbsolutePath());
         GameService.startService(this);
         initLayout(R.layout.activity_basemain);
@@ -153,6 +160,8 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             version = version == null ? minecraftProfile.lastVersionId : version;
 
             JMinecraftVersionList.Version mVersionInfo = Tools.getVersionInfo(version);
+            Tools.write(Tools.DIR_GAME_NEW+"/合并.json",Tools.GLOBAL_GSON.toJson(mVersionInfo,JMinecraftVersionList.Version.class));
+
             isInputStackCall = mVersionInfo.arguments != null;
             CallbackBridge.nativeSetUseInputStackQueue(isInputStackCall);
 

@@ -76,6 +76,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @SuppressWarnings("IOStreamConstructor")
 public final class Tools {
@@ -157,20 +158,20 @@ public final class Tools {
 
     public static void launchMinecraft(final Activity activity, MinecraftAccount minecraftAccount,
                                        MinecraftProfile minecraftProfile, String versionId, int versionJavaRequirement) throws Throwable {
-        int freeDeviceMemory = getFreeDeviceMemory(activity);
-        if(LauncherPreferences.PREF_RAM_ALLOCATION > freeDeviceMemory) {
-            Object memoryErrorLock = new Object();
-            activity.runOnUiThread(() -> {
-                androidx.appcompat.app.AlertDialog.Builder b = new androidx.appcompat.app.AlertDialog.Builder(activity)
-                        .setMessage(activity.getString(R.string.memory_warning_msg, freeDeviceMemory ,LauncherPreferences.PREF_RAM_ALLOCATION))
-                        .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {synchronized(memoryErrorLock){memoryErrorLock.notifyAll();}})
-                        .setOnCancelListener((i) -> {synchronized(memoryErrorLock){memoryErrorLock.notifyAll();}});
-                b.show();
-            });
-            synchronized (memoryErrorLock) {
-                memoryErrorLock.wait();
-            }
-        }
+//        int freeDeviceMemory = getFreeDeviceMemory(activity);
+//        if(LauncherPreferences.PREF_RAM_ALLOCATION > freeDeviceMemory) {
+//            Object memoryErrorLock = new Object();
+//            activity.runOnUiThread(() -> {
+//                androidx.appcompat.app.AlertDialog.Builder b = new androidx.appcompat.app.AlertDialog.Builder(activity)
+//                        .setMessage(activity.getString(R.string.memory_warning_msg, freeDeviceMemory ,LauncherPreferences.PREF_RAM_ALLOCATION))
+//                        .setPositiveButton(android.R.string.ok, (dialogInterface, i) -> {synchronized(memoryErrorLock){memoryErrorLock.notifyAll();}})
+//                        .setOnCancelListener((i) -> {synchronized(memoryErrorLock){memoryErrorLock.notifyAll();}});
+//                b.show();
+//            });
+//            synchronized (memoryErrorLock) {
+//                memoryErrorLock.wait();
+//            }
+//        }
         Runtime runtime = MultiRTUtils.forceReread(Tools.pickRuntime(minecraftProfile, versionJavaRequirement));
         JMinecraftVersionList.Version versionInfo = Tools.getVersionInfo(versionId);
         LauncherProfiles.update();
@@ -189,6 +190,15 @@ public final class Tools {
 
         List<String> javaArgList = new ArrayList<>();
         javaArgList.add("-Dorg.lwjgl.util.NoChecks=true");
+
+        if (!Objects.isNull(minecraftAccount.baseUrl)&&!minecraftAccount.baseUrl.equals("0")){
+            if(minecraftAccount.baseUrl.contains("auth.mc-user.com")){
+                javaArgList.add("-javaagent:"+DIR_GAME_HOME+"/login/nide8auth.jar="+minecraftAccount.baseUrl.replace("https://auth.mc-user.com:233/",""));
+                javaArgList.add("-Dnide8auth.client=true");
+            } else {
+                javaArgList.add("-javaagent:"+DIR_GAME_HOME+"/login/authlib-injector.jar="+minecraftAccount.baseUrl);
+            }
+        }
 
         getCacioJavaArgs(javaArgList, runtime.javaVersion == 8);
 
@@ -762,7 +772,7 @@ public final class Tools {
         DownloadUtils.downloadFile(urlInput, file);
     }
     public interface DownloaderFeedback {
-        void updateProgress(int curr, int max);
+        void updateProgress(long curr, long max);
     }
 
 
@@ -834,6 +844,18 @@ public final class Tools {
         FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(R.id.container_fragment, fragmentClass, bundle, fragmentTag);
+        if(addCurrentToBackstack) transaction.addToBackStack(null);
+
+        transaction.commit();
+    }
+
+    public static void swapFragmentAdd(FragmentActivity fragmentActivity , Class<? extends Fragment> fragmentClass,
+                                    @Nullable String fragmentTag, boolean addCurrentToBackstack, @Nullable Bundle bundle) {
+        // When people tab out, it might happen
+        //TODO handle custom animations
+        FragmentTransaction transaction = fragmentActivity.getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .add(R.id.container_fragment, fragmentClass, bundle, fragmentTag);
         if(addCurrentToBackstack) transaction.addToBackStack(null);
 
         transaction.commit();

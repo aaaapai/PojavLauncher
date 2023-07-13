@@ -54,6 +54,39 @@ public class ControlData {
      */
     public String dynamicX, dynamicY;
     public boolean isDynamicBtn, isToggle, passThruEnabled;
+
+    
+    public static ControlData[] getSpecialButtons(){
+        if (SPECIAL_BUTTONS == null) {
+            SPECIAL_BUTTONS = new ControlData[]{
+                new ControlData("LwjglGlfwKey", new int[]{SPECIALBTN_KEYBOARD}, "${margin} * 3 + ${width} * 2", "${margin}", false),
+                new ControlData("GUI", new int[]{SPECIALBTN_TOGGLECTRL}, "${margin}", "${bottom} - ${margin}"),
+                new ControlData("PRI", new int[]{SPECIALBTN_MOUSEPRI}, "${margin}", "${screen_height} - ${margin} * 3 - ${height} * 3"),
+                new ControlData("SEC", new int[]{SPECIALBTN_MOUSESEC}, "${margin} * 3 + ${width} * 2", "${screen_height} - ${margin} * 3 - ${height} * 3"),
+                new ControlData("Mouse", new int[]{SPECIALBTN_VIRTUALMOUSE}, "${right}", "${margin}", false),
+
+                new ControlData("MID", new int[]{SPECIALBTN_MOUSEMID}, "${margin}", "${margin}"),
+                new ControlData("SCROLLUP", new int[]{SPECIALBTN_SCROLLUP}, "${margin}", "${margin}"),
+                new ControlData("SCROLLDOWN", new int[]{SPECIALBTN_SCROLLDOWN}, "${margin}", "${margin}"),
+                new ControlData("MENU", new int[]{SPECIALBTN_MENU}, "${margin}", "${margin}")
+            };
+        }
+
+        return SPECIAL_BUTTONS;
+    }
+
+    public static List<String> buildSpecialButtonArray() {
+        if (SPECIAL_BUTTON_NAME_ARRAY == null) {
+            List<String> nameList = new ArrayList<>();
+            for (ControlData btn : getSpecialButtons()) {
+                nameList.add("SPECIAL_" + btn.name);
+            }
+            SPECIAL_BUTTON_NAME_ARRAY = nameList;
+            Collections.reverse(SPECIAL_BUTTON_NAME_ARRAY);
+        }
+
+        return SPECIAL_BUTTON_NAME_ARRAY;
+    v3_openjdk
     public String name;
     public int[] keycodes;      //Should store up to 4 keys
     public float opacity;       //Alpha value from 0 to 1;

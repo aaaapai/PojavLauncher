@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_menu_main"
+    android:gravity="top"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@color/background_app">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.kdt.mcgui.LauncherMenuButton
+                android:id="@+id/mc_version_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_66sdp"
+                android:background="?android:attr/selectableItemBackground"
+                android:drawableStart="@drawable/ic_grass"
+                android:text="MC版本:未选择"/>
+
+            <com.kdt.mcgui.LauncherMenuButton
+                android:id="@+id/forge_version_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_66sdp"
+                android:background="?android:attr/selectableItemBackground"
+                android:drawableStart="@drawable/forge"
+                android:text="Forge版本:未选择"/>
+
+            <com.kdt.mcgui.LauncherMenuButton
+                android:id="@+id/fabric_version_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_66sdp"
+                android:background="?android:attr/selectableItemBackground"
+                android:drawableStart="@drawable/fabric"
+                android:text="Fabric版本:未选择"/>
+
+            <com.kdt.mcgui.LauncherMenuButton
+                android:id="@+id/opt_version_button"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_66sdp"
+                android:background="?android:attr/selectableItemBackground"
+                android:drawableStart="@drawable/optfine"
+                android:text="OptFine版本:未选择"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <com.kdt.mcgui.MineButton
+        android:id="@+id/install_button"
+        android:text="安装"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginHorizontal="@dimen/_17sdp"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_62sdp"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

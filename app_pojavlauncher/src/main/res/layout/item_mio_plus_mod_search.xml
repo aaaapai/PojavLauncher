@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/logo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_file"
+        android:layout_width="60dp"
+        android:layout_height="60dp"/>
+
+    <TextView
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintLeft_toRightOf="@id/logo"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:id="@+id/item_mod_search_name_text"
+        android:text="ModName"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp"
+        android:ellipsize="marquee"
+        android:gravity="left|center"/>
+
+    <TextView
+        android:layout_marginStart="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@id/item_mod_search_name_text"
+        app:layout_constraintLeft_toRightOf="@id/logo"
+        app:layout_constraintRight_toLeftOf="@id/mod_search_download_imageview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="info"
+        android:id="@+id/item_mod_search_info_text"
+        android:ellipsize="marquee"
+        android:textColor="@color/minebutton_color"
+        android:textSize="10sp"/>
+
+    <ImageView
+        android:id="@+id/mod_search_download_imageview"
+        android:layout_marginEnd="@dimen/_10sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/ic_download"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
