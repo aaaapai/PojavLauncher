@@ -22,6 +22,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.DocumentsContract;
 import android.provider.OpenableColumns;
 import android.util.ArrayMap;
 import android.util.DisplayMetrics;
@@ -76,14 +79,15 @@ import java.util.Map;
 
 @SuppressWarnings("IOStreamConstructor")
 public final class Tools {
+    public static final Handler MAIN_HANDLER = new Handler(Looper.getMainLooper());
     public static String APP_NAME = "null";
 
     public static final Gson GLOBAL_GSON = new GsonBuilder().setPrettyPrinting().create();
 
     public static final String URL_HOME = "https://pojavlauncherteam.github.io";
-
     public static String NATIVE_LIB_DIR;
     public static String DIR_DATA; //Initialized later to get context
+    public static File DIR_CACHE;
     public static String MULTIRT_HOME;
     public static String LOCAL_RENDERER = null;
     public static int DEVICE_ARCHITECTURE;
@@ -135,6 +139,7 @@ public final class Tools {
      * Any value (in)directly dependant on DIR_DATA should be set only here.
      */
     public static void initContextConstants(Context ctx){
+        DIR_CACHE = ctx.getCacheDir();
         DIR_DATA = ctx.getFilesDir().getParent();
         MULTIRT_HOME = DIR_DATA+"/runtimes";
         DIR_GAME_HOME = getPojavStorageRoot(ctx).getAbsolutePath();
@@ -183,6 +188,7 @@ public final class Tools {
         String launchClassPath = generateLaunchClassPath(versionInfo, versionId);
 
         List<String> javaArgList = new ArrayList<>();
+        javaArgList.add("-Dorg.lwjgl.util.NoChecks=true");
 
         getCacioJavaArgs(javaArgList, runtime.javaVersion == 8);
 
@@ -303,7 +309,7 @@ public final class Tools {
 
         Map<String, String> varArgMap = new ArrayMap<>();
         varArgMap.put("classpath_separator", ":");
-        varArgMap.put("library_directory", new File(gameDir, "libraries").getAbsolutePath());
+        varArgMap.put("library_directory", DIR_HOME_LIBRARY);
         varArgMap.put("version_name", versionInfo.id);
         varArgMap.put("natives_directory", Tools.NATIVE_LIB_DIR);
 
@@ -382,15 +388,13 @@ public final class Tools {
         return strList.toArray(new String[0]);
     }
 
-    public static String artifactToPath(String name) {
-        int idx = name.indexOf(":");
-        assert idx != -1;
-        int idx2 = name.indexOf(":", idx+1);
-        assert idx2 != -1;
-        String group = name.substring(0, idx);
-        String artifact = name.substring(idx+1, idx2);
-        String version = name.substring(idx2+1).replace(':','-');
-        return group.replaceAll("\\.", "/") + "/" + artifact + "/" + version + "/" + artifact + "-" + version + ".jar";
+    public static String artifactToPath(DependentLibrary library) {
+        if (library.downloads != null &&
+            library.downloads.artifact != null &&
+            library.downloads.artifact.path != null)
+            return library.downloads.artifact.path;
+        String[] libInfos = library.name.split(":");
+        return libInfos[0].replaceAll("\\.", "/") + "/" + libInfos[1] + "/" + libInfos[2] + "/" + libInfos[1] + "-" + libInfos[2] + ".jar";
     }
 
     public static String getPatchedFile(String version) {
@@ -590,11 +594,15 @@ public final class Tools {
     }
 
     public static void dialogOnUiThread(final Activity activity, final CharSequence title, final CharSequence message) {
-        activity.runOnUiThread(() -> new AlertDialog.Builder(activity)
+        activity.runOnUiThread(()->dialog(activity, title, message));
+    }
+
+    public static void dialog(final Context context, final CharSequence title, final CharSequence message) {
+        new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok, null)
-                .show());
+                .show();
     }
 
     public static void openURL(Activity act, String url) {
@@ -615,7 +623,7 @@ public final class Tools {
         List<String> libDir = new ArrayList<>();
         for (DependentLibrary libItem: info.libraries) {
             if(!checkRules(libItem.rules)) continue;
-            libDir.add(Tools.DIR_HOME_LIBRARY + "/" + Tools.artifactToPath(libItem.name));
+            libDir.add(Tools.DIR_HOME_LIBRARY + "/" + artifactToPath(libItem));
         }
         return libDir.toArray(new String[0]);
     }
@@ -890,7 +898,7 @@ public final class Tools {
         sExecutorService.execute(() -> {
             try {
                 final String name = getFileName(activity, uri);
-                final File modInstallerFile = new File(activity.getCacheDir(), name);
+                final File modInstallerFile = new File(Tools.DIR_CACHE, name);
                 FileOutputStream fos = new FileOutputStream(modInstallerFile);
                 InputStream input = activity.getContentResolver().openInputStream(uri);
                 IOUtils.copy(input, fos);
@@ -955,6 +963,10 @@ public final class Tools {
         return runtime;
     }
 
+    public static void runOnUiThread(Runnable runnable) {
+        MAIN_HANDLER.post(runnable);
+    }
+
     public static @NonNull String pickRuntime(MinecraftProfile minecraftProfile, int targetJavaVersion) {
         String runtime = getSelectedRuntime(minecraftProfile);
         String profileRuntime = getRuntimeName(minecraftProfile.javaDir);
@@ -966,5 +978,20 @@ public final class Tools {
             runtime = preferredRuntime;
         }
         return runtime;
+    }
+
+    /** Triggers the share intent chooser, with the latestlog file attached to it */
+    public static void shareLog(Context context){
+        Uri contentUri = DocumentsContract.buildDocumentUri(context.getString(R.string.storageProviderAuthorities), Tools.DIR_GAME_HOME + "/latestlog.txt");
+
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        shareIntent.setType("text/plain");
+
+        Intent sendIntent = Intent.createChooser(shareIntent, "latestlog.txt");
+        context.startActivity(sendIntent);
     }
 }

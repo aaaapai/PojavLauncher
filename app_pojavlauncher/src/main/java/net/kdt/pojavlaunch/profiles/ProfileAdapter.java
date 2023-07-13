@@ -1,14 +1,18 @@
 package net.kdt.pojavlaunch.profiles;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import androidx.core.graphics.ColorUtils;
+
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
+import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
@@ -25,25 +29,17 @@ import fr.spse.extended_view.ExtendedTextView;
  */
 public class ProfileAdapter extends BaseAdapter {
     private Map<String, MinecraftProfile> mProfiles;
-    public static final String CREATE_PROFILE_MAGIC = "___extra____profile-create";
     private final MinecraftProfile dummy = new MinecraftProfile();
-    private MinecraftProfile mCreateProfile;
     private List<String> mProfileList;
+    private final ProfileAdapterExtra[] mExtraEntires;
 
-    public ProfileAdapter(Context context, boolean enableCreateButton) {
+    public ProfileAdapter(Context context, ProfileAdapterExtra[] extraEntries) {
         ProfileIconCache.initDefault(context);
         LauncherProfiles.update();
         mProfiles = new HashMap<>(LauncherProfiles.mainProfileJson.profiles);
-        if(enableCreateButton) {
-            mCreateProfile = new MinecraftProfile();
-            mCreateProfile.name = context.getString(R.string.create_profile);
-            mCreateProfile.lastVersionId = null;
-        }
+        if(extraEntries == null) mExtraEntires = new ProfileAdapterExtra[0];
+        else mExtraEntires = extraEntries;
         mProfileList = new ArrayList<>(Arrays.asList(mProfiles.keySet().toArray(new String[0])));
-        if(enableCreateButton) {
-            mProfileList.add(ProfileAdapter.CREATE_PROFILE_MAGIC);
-            mProfiles.put(CREATE_PROFILE_MAGIC, mCreateProfile);
-        }
     }
     /*
      * Gets how much profiles are loaded in the adapter right now
@@ -51,7 +47,7 @@ public class ProfileAdapter extends BaseAdapter {
      */
     @Override
     public int getCount() {
-        return mProfileList.size();
+        return mProfileList.size() + mExtraEntires.length;
     }
     /*
      * Gets the profile at a given index
@@ -60,12 +56,15 @@ public class ProfileAdapter extends BaseAdapter {
      */
     @Override
     public Object getItem(int position) {
-        //safe since the second check in the and statement will be skipped if the first one fails
-        if(position < mProfileList.size() && mProfiles.containsKey(mProfileList.get(position))) {
-            return mProfileList.get(position);
-        }else{
-            return null;
+        int profileListSize = mProfileList.size();
+        int extraPosition = position - profileListSize;
+        if(position < profileListSize){
+            String profileName = mProfileList.get(position);
+            if(mProfiles.containsKey(profileName)) return profileName;
+        }else if(extraPosition >= 0 && extraPosition < mExtraEntires.length) {
+            return mExtraEntires[extraPosition];
         }
+        return null;
     }
 
     public int resolveProfileIndex(String name) {
@@ -81,8 +80,6 @@ public class ProfileAdapter extends BaseAdapter {
     public void notifyDataSetChanged() {
         mProfiles = new HashMap<>(LauncherProfiles.mainProfileJson.profiles);
         mProfileList = new ArrayList<>(Arrays.asList(mProfiles.keySet().toArray(new String[0])));
-        mProfileList.add(ProfileAdapter.CREATE_PROFILE_MAGIC);
-        mProfiles.put(CREATE_PROFILE_MAGIC, mCreateProfile);
         super.notifyDataSetChanged();
     }
 
@@ -90,11 +87,13 @@ public class ProfileAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = convertView;
         if (v == null) v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_version_profile_layout,parent,false);
-        setViewProfile(v,mProfileList.get(position));
+        Object profileObject = getItem(position);
+        if(profileObject instanceof String) setViewProfile(v, (String) profileObject, true);
+        else if(profileObject instanceof ProfileAdapterExtra) setViewExtra(v, (ProfileAdapterExtra) profileObject);
         return v;
     }
 
-    public void setViewProfile(View v, String nm) {
+    public void setViewProfile(View v, String nm, boolean displaySelection) {
         ExtendedTextView extendedTextView = (ExtendedTextView) v;
 
         MinecraftProfile minecraftProfile = mProfiles.get(nm);
@@ -122,5 +121,17 @@ public class ProfileAdapter extends BaseAdapter {
 
         } else extendedTextView.setText(extendedTextView.getText());
 
+        // Set selected background if needed
+        if(displaySelection){
+            String selectedProfile = LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE,"");
+            extendedTextView.setBackgroundColor(selectedProfile.equals(nm) ? ColorUtils.setAlphaComponent(Color.WHITE,60) : Color.TRANSPARENT);
+        }else extendedTextView.setBackgroundColor(Color.TRANSPARENT);
+    }
+
+    public void setViewExtra(View v, ProfileAdapterExtra extra) {
+        ExtendedTextView extendedTextView = (ExtendedTextView) v;
+        extendedTextView.setCompoundDrawablesRelative(extra.icon, null, extendedTextView.getCompoundsDrawables()[2], null);
+        extendedTextView.setText(extra.name);
+        extendedTextView.setBackgroundColor(Color.TRANSPARENT);
     }
 }
