@@ -13,22 +13,24 @@ public class CustomControls {
     public float scaledAt;
 	public List<ControlData> mControlDataList;
 	public List<ControlDrawerData> mDrawerDataList;
+	public List<ControlData> mJoystickDataList;
 	public CustomControls() {
-		this(new ArrayList<>(), new ArrayList<>());
+		this(new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 	}
 
 
 
-	public CustomControls(List<ControlData> mControlDataList, List<ControlDrawerData> mDrawerDataList) {
+	public CustomControls(List<ControlData> mControlDataList, List<ControlDrawerData> mDrawerDataList, List<ControlData> mJoystickDataList) {
 		this.mControlDataList = mControlDataList;
 		this.mDrawerDataList = mDrawerDataList;
-        this.scaledAt = 100f;
+		this.mJoystickDataList = mJoystickDataList;
+		this.scaledAt = 100f;
 	}
 	
 	// Generate default control
 	public CustomControls(Context ctx) {
 		this();
-		this.mControlDataList.add(new ControlData(ControlData.getSpecialButtons()[0])); // Keyboard
+		this.mControlDataList.add(new ControlData(ControlData.getSpecialButtons()[0])); // LwjglGlfwKey
 		this.mControlDataList.add(new ControlData(ControlData.getSpecialButtons()[1])); // GUI
 		this.mControlDataList.add(new ControlData(ControlData.getSpecialButtons()[2])); // Primary Mouse mControlDataList
 		this.mControlDataList.add(new ControlData(ControlData.getSpecialButtons()[3])); // Secondary Mouse mControlDataList
@@ -52,13 +54,13 @@ public class CustomControls {
 		this.mControlDataList.add(new ControlData(ctx, R.string.control_jump, new int[]{LwjglGlfwKeycode.GLFW_KEY_SPACE}, "${right} - ${margin} * 2 - ${width}", "${bottom} - ${margin} * 2 - ${height}", true));
 
 		//The default controls are conform to the V2
-		version = 4;
+		version = 5;
 	}
 
 	
 	public void save(String path) throws IOException {
 		//Current version is the V2.5 so the version as to be marked as 4 !
-		version = 4;
+		version = 5;
 
 		Tools.write(path, Tools.GLOBAL_GSON.toJson(this));
 	}

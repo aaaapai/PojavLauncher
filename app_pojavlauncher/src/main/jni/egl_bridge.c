@@ -603,6 +603,7 @@ void bigcore_set_affinity();
 #define RENDERER_GL4ES 1
 #define RENDERER_VK_ZINK 2
 #define RENDERER_VIRGL 3
+#define RENDERER_VGPU 4
 
 void* gbuffer;
 
@@ -618,6 +619,7 @@ void pojavTerminate() {
     printf("EGLBridge: Terminating\n");
 
     switch (pojav_environ->config_renderer) {
+        case RENDERER_VGPU:
         case RENDERER_GL4ES: {
             eglMakeCurrent_p(potatoBridge.eglDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
             eglDestroySurface_p(potatoBridge.eglDisplay, potatoBridge.eglSurface);
@@ -639,7 +641,7 @@ void pojavTerminate() {
 
 JNIEXPORT void JNICALL Java_net_kdt_pojavlaunch_utils_JREUtils_setupBridgeWindow(JNIEnv* env, jclass clazz, jobject surface) {
     pojav_environ->pojavWindow = ANativeWindow_fromSurface(env, surface);
-    if(pojav_environ->config_renderer == RENDERER_GL4ES) {
+    if(pojav_environ->config_renderer == RENDERER_GL4ES||pojav_environ->config_renderer == RENDERER_VGPU) {
         gl_setup_window();
     }
 }
@@ -652,6 +654,7 @@ Java_net_kdt_pojavlaunch_utils_JREUtils_releaseBridgeWindow(JNIEnv *env, jclass 
 
 void* pojavGetCurrentContext() {
     switch (pojav_environ->config_renderer) {
+        case RENDERER_VGPU:
         case RENDERER_GL4ES:
             return (void *)eglGetCurrentContext_p();
         case RENDERER_VIRGL:
@@ -748,15 +751,17 @@ int pojavInit() {
             printf("VirGL: OSMesa buffer flush is DISABLED!\n");
         }
         loadSymbolsVirGL();
-    } else if (strncmp("opengles", renderer, 8) == 0) {
+    } else if (strncmp("opengles2_vgpu", renderer,14) == 0) {
+        pojav_environ->config_renderer = RENDERER_VGPU;
+    } else if(strncmp("opengles", renderer, 8) == 0) {
         pojav_environ->config_renderer = RENDERER_GL4ES;
-        //loadSymbols();
     } else if (strcmp(renderer, "vulkan_zink") == 0) {
-        pojav_environ->config_renderer = RENDERER_VK_ZINK;
-        setenv("GALLIUM_DRIVER","zink",1);
-        loadSymbols();
+            pojav_environ->config_renderer = RENDERER_VK_ZINK;
+            setenv("GALLIUM_DRIVER","zink",1);
+            loadSymbols();
     }
-    if(pojav_environ->config_renderer == RENDERER_GL4ES) {
+
+    if (pojav_environ->config_renderer == RENDERER_GL4ES||pojav_environ->config_renderer == RENDERER_VGPU) {
         if(gl_init()) {
             gl_setup_window(pojav_environ->pojavWindow);
             return 1;
@@ -880,6 +885,7 @@ void pojavSwapBuffers() {
         return;
     }
     switch (pojav_environ->config_renderer) {
+        case RENDERER_VGPU:
         case RENDERER_GL4ES: {
             gl_swap_buffers();
         } break;
@@ -932,7 +938,7 @@ void pojavMakeCurrent(void* window) {
     //    printf("OSMDroid: skipped context reset\n");
     //    return JNI_TRUE;
     //}
-    if(pojav_environ->config_renderer == RENDERER_GL4ES) {
+    if(pojav_environ->config_renderer == RENDERER_GL4ES||pojav_environ->config_renderer == RENDERER_VGPU) {
         gl_make_current((render_window_t*)window);
     }
     if (pojav_environ->config_renderer == RENDERER_VK_ZINK || pojav_environ->config_renderer == RENDERER_VIRGL) {
@@ -979,7 +985,7 @@ Java_org_lwjgl_glfw_GLFW_nativeEglDetachOnCurrentThread(JNIEnv *env, jclass claz
 */
 
 void* pojavCreateContext(void* contextSrc) {
-    if (pojav_environ->config_renderer == RENDERER_GL4ES) {
+    if (pojav_environ->config_renderer == RENDERER_GL4ES||pojav_environ->config_renderer == RENDERER_VGPU) {
         /*const EGLint ctx_attribs[] = {
             EGL_CONTEXT_CLIENT_VERSION, atoi(getenv("LIBGL_ES")),
             EGL_NONE
@@ -1022,6 +1028,7 @@ Java_org_lwjgl_opengl_GL_getNativeWidthHeight(JNIEnv *env, jobject thiz) {
 }
 void pojavSwapInterval(int interval) {
     switch (pojav_environ->config_renderer) {
+        case RENDERER_VGPU:
         case RENDERER_GL4ES: {
             gl_swap_interval(interval);
         } break;

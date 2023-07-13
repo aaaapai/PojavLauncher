@@ -1360,4 +1360,6 @@ public class GLFW
         // Fast path, but will return true if one has the same prefix
         return glGetString(GL_EXTENSIONS).contains(ext);
     }
+
+    public static native void setInstallProgress(double progress);
 }

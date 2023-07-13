@@ -105,20 +105,20 @@ android {
         minSdkVersion 21
         targetSdkVersion 33
         versionCode getDateSeconds()
-        versionName getVersionName()
+        versionName "mioplus-1.0.1"//getVersionName()
         multiDexEnabled true //important
     }
 
     buildTypes {
         debug {
-            applicationIdSuffix '.debug'
+            applicationIdSuffix '.mioplus'
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.customDebug
-            resValue 'string', 'application_package', 'net.kdt.pojavlaunch.debug'
-            resValue 'string', 'storageProviderAuthorities', 'net.kdt.pojavlaunch.scoped.gamefolder.debug'
-            resValue 'string', 'shareProviderAuthority', 'net.kdt.pojavlaunch.scoped.controlfolder.debug'
+            resValue 'string', 'application_package', 'net.kdt.pojavlaunch.mioplus'
+            resValue 'string', 'storageProviderAuthorities', 'net.kdt.pojavlaunch.scoped.gamefolder.mioplus'
+            resValue 'string', 'shareProviderAuthority', 'net.kdt.pojavlaunch.scoped.controlfolder.mioplus'
         }
         proguard {
             initWith debug
@@ -186,6 +186,7 @@ dependencies {
     implementation 'com.github.PojavLauncherTeam:portrait-sdp:ed33e89cbc'
     implementation 'com.github.PojavLauncherTeam:portrait-ssp:6c02fd739b'
     implementation 'com.github.Mathias-Boulay:ExtendedView:1.0.0'
+    implementation 'com.github.Mathias-Boulay:virtual-joystick-android:4fee901b58'
     implementation 'com.github.Mathias-Boulay:android_gamepad_remapper:71397676b5'
 
 
@@ -197,6 +198,10 @@ dependencies {
     implementation 'net.sourceforge.htmlcleaner:htmlcleaner:2.6.1'
 
     // implementation 'net.sourceforge.streamsupport:streamsupport-cfuture:1.7.0'
+
+    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+    implementation 'com.daimajia.numberprogressbar:library:1.4@aar'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }

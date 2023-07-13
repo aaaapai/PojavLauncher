@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_menu_main"
+    android:gravity="top"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@color/background_app">
+
+    <EditText
+        android:id="@+id/mod_search_edittext"
+        android:background="@drawable/background_line"
+        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:lines="1"
+        android:inputType="text"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_40sdp"/>
+
+    <com.kdt.mcgui.MineButton
+        android:layout_marginTop="@dimen/_10sdp"
+        android:id="@+id/mod_search_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintWidth_percent="0.2"
+        android:text="搜索"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_40sdp"/>
+
+    <ListView
+        android:scrollbars="none"
+        android:layout_margin="@dimen/_10sdp"
+        android:id="@+id/mod_search_listview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mod_search_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

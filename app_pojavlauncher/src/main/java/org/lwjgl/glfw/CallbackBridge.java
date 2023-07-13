@@ -212,7 +212,6 @@ public class CallbackBridge {
             grabListeners.remove(listener);
         }
     }
-
     @CriticalNative public static native void nativeSetUseInputStackQueue(boolean useInputStackQueue);
 
     @CriticalNative private static native boolean nativeSendChar(char codepoint);
@@ -224,6 +223,7 @@ public class CallbackBridge {
     @CriticalNative private static native void nativeSendMouseButton(int button, int action, int mods);
     @CriticalNative private static native void nativeSendScroll(double xoffset, double yoffset);
     @CriticalNative private static native void nativeSendScreenSize(int width, int height);
+    @CriticalNative public static native double nativeGetInstallProgress();
     public static native void nativeSetWindowAttrib(int attrib, int value);
     static {
         System.loadLibrary("pojavexec");

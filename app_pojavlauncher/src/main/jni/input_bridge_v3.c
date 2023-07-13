@@ -31,6 +31,8 @@
 #define EVENT_TYPE_SCROLL 1007
 #define EVENT_TYPE_WINDOW_SIZE 1008
 
+static double PROGRESS=0;
+
 jint (*orig_ProcessImpl_forkAndExec)(JNIEnv *env, jobject process, jint mode, jbyteArray helperpath, jbyteArray prog, jbyteArray argBlock, jint argc, jbyteArray envBlock, jint envc, jbyteArray dir, jintArray std_fds, jboolean redirectErrorStream);
 
 static void registerFunctions(JNIEnv *env);
@@ -537,4 +539,16 @@ static void registerFunctions(JNIEnv *env) {
                             bridge_class,
                             use_critical_cc ? critical_fcns : noncritical_fcns,
                             sizeof(critical_fcns)/sizeof(critical_fcns[0]));
+}
+
+
+
+JNIEXPORT jdouble JNICALL
+Java_org_lwjgl_glfw_CallbackBridge_nativeGetInstallProgress(JNIEnv *env, jclass clazz) {
+    return PROGRESS;
+}
+
+JNIEXPORT void JNICALL
+Java_org_lwjgl_glfw_GLFW_setInstallProgress(JNIEnv *env, jclass clazz, jdouble progress) {
+    PROGRESS=progress;
 }

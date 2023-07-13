@@ -290,10 +290,10 @@ public class AsyncMinecraftDownloader {
         File outFile = new File(objectsDir, assetPath);
         downloadFileMonitored(MINECRAFT_RES + assetPath, outFile, getByteBuffer(),
                 new Tools.DownloaderFeedback() {
-                    int prevCurr;
+                    long prevCurr;
                     @Override
-                    public void updateProgress(int curr, int max) {
-                        downloadCounter.addAndGet(curr - prevCurr);
+                    public void updateProgress(long curr, long max) {
+                        downloadCounter.addAndGet((int) (curr - prevCurr));
                         prevCurr = curr;
                     }
                 });
@@ -304,10 +304,10 @@ public class AsyncMinecraftDownloader {
         File outFile = new File(resDir,"/"+assetName);
         downloadFileMonitored(MINECRAFT_RES + assetPath, outFile, getByteBuffer(),
                 new Tools.DownloaderFeedback() {
-                    int prevCurr;
+                    long prevCurr;
                     @Override
-                    public void updateProgress(int curr, int max) {
-                        downloadCounter.addAndGet(curr - prevCurr);
+                    public void updateProgress(long curr, long max) {
+                        downloadCounter.addAndGet((int) (curr - prevCurr));
                         prevCurr = curr;
                     }
                 });
