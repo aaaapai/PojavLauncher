@@ -1,5 +1,3 @@
-app_pojavlauncher/src/main/java/net/kdt/pojavlaunch/customcontrols/handleview/EditControlPopup.java
-
 package net.kdt.pojavlaunch.customcontrols.handleview;
 
 
