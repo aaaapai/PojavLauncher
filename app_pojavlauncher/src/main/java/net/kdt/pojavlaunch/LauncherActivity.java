@@ -1,10 +1,13 @@
 package net.kdt.pojavlaunch;
 
 import static net.kdt.pojavlaunch.MainActivity.INTENT_MINECRAFT_VERSION;
+import static net.kdt.pojavlaunch.PojavApplication.sExecutorService;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +26,8 @@ import androidx.fragment.app.FragmentManager;
 
 import com.kdt.mcgui.ProgressLayout;
 import com.kdt.mcgui.mcAccountSpinner;
+import com.mio.MioUtils;
+import com.mio.fragments.ModManageFragment;
 
 import net.kdt.pojavlaunch.fragments.MainMenuFragment;
 import net.kdt.pojavlaunch.fragments.MicrosoftLoginFragment;
@@ -42,7 +47,14 @@ import net.kdt.pojavlaunch.tasks.AsyncVersionList;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
+import net.kdt.pojavlaunch.mod.ModTools;
+
+import org.apache.commons.io.IOUtils;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class LauncherActivity extends BaseActivity {
     public static final String SETTING_FRAGMENT_TAG = "SETTINGS_FRAGMENT";
@@ -168,9 +180,7 @@ public class LauncherActivity extends BaseActivity {
 
         ExtraCore.addExtraListener(ExtraConstants.LAUNCH_GAME, mLaunchGameListener);
 
-        new AsyncVersionList().getVersionList(versions -> {
-            ExtraCore.setValue(ExtraConstants.RELEASE_TABLE, versions);
-        });
+        new AsyncVersionList().getVersionList(versions -> ExtraCore.setValue(ExtraConstants.RELEASE_TABLE, versions), false);
 
         mProgressLayout.observe(ProgressLayout.DOWNLOAD_MINECRAFT);
         mProgressLayout.observe(ProgressLayout.UNPACK_RUNTIME);
@@ -202,7 +212,7 @@ public class LauncherActivity extends BaseActivity {
 
         getSupportFragmentManager().unregisterFragmentLifecycleCallbacks(mFragmentCallbackListener);
     }
-
+    private ProgressDialog dialog;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -211,7 +221,7 @@ public class LauncherActivity extends BaseActivity {
             Tools.launchModInstaller(this, data);
             return;
         }
-        if(requestCode == ModTools.RUN_MRPACK_INSTALLER && data != null){
+                if(requestCode == ModTools.RUN_MRPACK_INSTALLER && data != null){
             try {
                 ModTools.launchModpackInstaller(this, data);
 
@@ -227,13 +237,78 @@ public class LauncherActivity extends BaseActivity {
         if(requestCode == MultiRTConfigDialog.MULTIRT_PICK_RUNTIME && data != null){
             Tools.installRuntimeFromUri(this, data.getData());
         }
+        if(requestCode == 114514 && data != null){
+            ProgressDialog dialog=new ProgressDialog(this);
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+            sExecutorService.execute(() -> {
+                try {
+                    Uri uri=data.getData();
+                    final String name = Tools.getFileName(LauncherActivity.this, uri);
+                    final File modFile = new File(ModManageFragment.path, name);
+                    if (!modFile.getParentFile().exists()){
+                        modFile.getParentFile().mkdirs();
+                    }
+                    FileOutputStream fos = new FileOutputStream(modFile);
+                    InputStream input = LauncherActivity.this.getContentResolver().openInputStream(uri);
+                    IOUtils.copy(input, fos);
+                    input.close();
+                    fos.close();
+                    LauncherActivity.this.runOnUiThread(() -> {
+                        dialog.dismiss();
+                        ModManageFragment.addModToList(modFile);
+                        Toast.makeText(LauncherActivity.this,"Mod安装完成",Toast.LENGTH_LONG).show();
+                    });
+                }catch(IOException e) {
+                    LauncherActivity.this.runOnUiThread(() -> {
+                        dialog.dismiss();
+                    });
+                    Tools.showError(LauncherActivity.this, e);
+                }
+            });
+        }
+        if(requestCode == 1919810 && data != null){
+            ProgressDialog dialog=new ProgressDialog(this);
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+            PojavApplication.sExecutorService.execute(() -> {
+                try {
+                    Uri uri=data.getData();
+                    final String name = Tools.getFileName(this, uri);
+                    if (!name.endsWith(".zip")){
+                        runOnUiThread(() -> {
+                            dialog.dismiss();
+                            Toast.makeText(this,"所选择文件不是zip格式的整合包，请重新选择。",Toast.LENGTH_LONG).show();
+                        });
+                        return;
+                    }
+                    final File modPackFile = new File(Tools.DIR_GAME_HOME+"/整合包", name);
+                    if (!modPackFile.getParentFile().exists()){
+                        modPackFile.getParentFile().mkdirs();
+                    }
+                    FileOutputStream fos = new FileOutputStream(modPackFile);
+                    InputStream input = getContentResolver().openInputStream(uri);
+                    IOUtils.copy(input, fos);
+                    input.close();
+                    fos.close();
+                    runOnUiThread(dialog::dismiss);
+                    runOnUiThread(()->MioUtils.installModPack(LauncherActivity.this,modPackFile.getAbsolutePath()));
+                }catch (Exception e){
+                    runOnUiThread(dialog::dismiss);
+                    Tools.showError(LauncherActivity.this, e);
+                }
+            });
+
+        }
     }
 
     /** Custom implementation to feel more natural when a backstack isn't present */
     @Override
     public void onBackPressed() {
-        if(isFragmentVisible(MicrosoftLoginFragment.TAG)){
-            MicrosoftLoginFragment fragment = (MicrosoftLoginFragment) getSupportFragmentManager().findFragmentByTag(MicrosoftLoginFragment.TAG);
+        MicrosoftLoginFragment fragment = (MicrosoftLoginFragment) getVisibleFragment(MicrosoftLoginFragment.TAG);
+        if(fragment != null){
             if(fragment.canGoBack()){
                 fragment.goBack();
                 return;
@@ -248,14 +323,22 @@ public class LauncherActivity extends BaseActivity {
         LauncherPreferences.computeNotchSize(this);
     }
 
-    private boolean isFragmentVisible(String tag){
+    @SuppressWarnings("SameParameterValue")
+    private Fragment getVisibleFragment(String tag){
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
-        return fragment != null && fragment.isVisible();
+        if(fragment != null && fragment.isVisible()) {
+            return fragment;
+        }
+        return null;
     }
 
-    private boolean isFragmentVisible(int id){
+    @SuppressWarnings("unused")
+    private Fragment getVisibleFragment(int id){
         Fragment fragment = getSupportFragmentManager().findFragmentById(id);
-        return fragment != null && fragment.isVisible();
+        if(fragment != null && fragment.isVisible()) {
+            return fragment;
+        }
+        return null;
     }
 
     private void askForStoragePermission(){
@@ -315,4 +398,4 @@ public class LauncherActivity extends BaseActivity {
 
 
 
-}
+            }
