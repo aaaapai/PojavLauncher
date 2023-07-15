@@ -1040,4 +1040,4 @@ public final class Tools {
         Intent sendIntent = Intent.createChooser(shareIntent, "latestlog.txt");
         context.startActivity(sendIntent);
     }
-        }
+}
