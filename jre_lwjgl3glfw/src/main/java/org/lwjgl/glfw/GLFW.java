@@ -371,6 +371,26 @@ public class GLFW
     GLFW_COCOA_CHDIR_RESOURCES = 0x51001,
     GLFW_COCOA_MENUBAR         = 0x51002;
 
+d file with 13 additions and 0 deletions.
+
+Split
+
+Unified
+  13 changes: 13 additions & 0 deletions13  
+jre_lwjgl3glfw/src/main/java/org/lwjgl/glfw/GLFW.java
+@@ -371,6 +371,15 @@ public class GLFW
+    GLFW_COCOA_CHDIR_RESOURCES = 0x51001,
+    GLFW_COCOA_MENUBAR         = 0x51002;
+
+    /** Hint value for {@link #GLFW_PLATFORM PLATFORM} that enables automatic platform selection. */
+    public static final int
+        GLFW_ANY_PLATFORM     = 0x60000,
+        GLFW_PLATFORM_WIN32   = 0x60001,
+        GLFW_PLATFORM_COCOA   = 0x60002,
+        GLFW_PLATFORM_WAYLAND = 0x60003,
+        GLFW_PLATFORM_X11     = 0x60004,
+        GLFW_PLATFORM_NULL    = 0x60005;
+
     /** Don't care value. */
     public static final int GLFW_DONT_CARE = -1;
 
@@ -822,6 +842,9 @@ public class GLFW
 
     public static void glfwInitHint(int hint, int value) { }
 
+	    public static int glfwGetPlatform() {
+        return GLFW_PLATFORM_X11;
+	    }
     @NativeType("GLFWwindow *")
     public static long glfwGetCurrentContext() {
         long __functionAddress = Functions.GetCurrentContext;
