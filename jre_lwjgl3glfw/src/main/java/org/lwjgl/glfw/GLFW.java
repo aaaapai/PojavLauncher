@@ -1368,7 +1368,8 @@ public class GLFW
     }
 
     @NativeType("int")
-    public static boolean glfwExtensionSupported(@NativeType("char const *") CharSequence ext) {
+    public static boolean 
+	glfwExtensionSupported(@NativeType("char const *") CharSequence ext) {
         //return Arrays.stream(glGetString(GL_EXTENSIONS).split(" ")).anyMatch(ext::equals);
         // Fast path, but will return true if one has the same prefix
         return glGetString(GL_EXTENSIONS).contains(ext);

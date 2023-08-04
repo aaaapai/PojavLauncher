@@ -109,7 +109,7 @@
         -->
         <Spinner
             android:id="@+id/editMapping_spinner_1"
-            android:layout_width="0dp"
+            android:layout_width="1px"
             android:layout_height="30dp"
             android:dropDownWidth="match_parent"
             android:dropDownVerticalOffset="30dp"
@@ -150,6 +150,19 @@
             app:layout_constraintTop_toTopOf="@+id/mapping_3_textview"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <Spinner
+            android:id="@+id/editMapping_spinner_3"
+            android:layout_width="1px"
+            android:layout_height="30dp"
+            android:background="@android:color/transparent"
+            android:dropDownWidth="@dimen/_267sdp"
+            android:dropDownVerticalOffset="30dp"
+            android:gravity="center"
+
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editMapping_spinner_1" />
 
 
         <Spinner
