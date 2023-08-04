@@ -22,8 +22,10 @@ public class ControlSubButton extends ControlButton {
     }
 
     private void filterProperties(){
-        mProperties.setHeight(parentDrawer.getProperties().getHeight());
-        mProperties.setWidth(parentDrawer.getProperties().getWidth());
+        if (parentDrawer != null && parentDrawer.drawerData.orientation != ControlDrawerData.Orientation.FREE) {
+            mProperties.setHeight(parentDrawer.getProperties().getHeight());
+            mProperties.setWidth(parentDrawer.getProperties().getWidth());
+        }
         mProperties.isDynamicBtn = false;
 
         setProperties(mProperties, false);
