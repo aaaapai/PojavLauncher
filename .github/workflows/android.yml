@@ -21,7 +21,8 @@ jobs:
         uses: actions/setup-java@main
         with:
           distribution: 'temurin'
-          java-version: 'jdk17u-2023-09-06-08-28-beta'
+          java-version: '17'
+          check-latest: 'true'
       - uses: gradle/gradle-build-action@main
         with:
           gradle-version: 7.6.1
