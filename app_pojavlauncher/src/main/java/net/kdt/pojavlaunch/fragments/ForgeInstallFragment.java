@@ -9,9 +9,9 @@ import androidx.annotation.NonNull;
 
 import net.kdt.pojavlaunch.JavaGUILauncherActivity;
 import net.kdt.pojavlaunch.R;
-import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.modloaders.ForgeDownloadTask;
 import net.kdt.pojavlaunch.modloaders.ForgeUtils;
+import net.kdt.pojavlaunch.modloaders.ForgeVersion;
 import net.kdt.pojavlaunch.modloaders.ForgeVersionListAdapter;
 import net.kdt.pojavlaunch.modloaders.ModloaderListenerProxy;
 
@@ -19,7 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class ForgeInstallFragment extends ModVersionListFragment<List<String>> {
+public class ForgeInstallFragment extends ModVersionListFragment<List<ForgeVersion>> {
     public static final String TAG = "ForgeInstallFragment";
     private static ModloaderListenerProxy sTaskProxy;
 
@@ -48,18 +48,18 @@ public class ForgeInstallFragment extends ModVersionListFragment<List<String>> {
     }
 
     @Override
-    public List<String> loadVersionList() throws IOException {
-        return ForgeUtils.downloadForgeVersions();
+    public List<ForgeVersion> loadVersionList() throws IOException {
+        return ForgeUtils.downloadAllForgeVersions();
     }
 
     @Override
-    public ExpandableListAdapter createAdapter(List<String> versionList, LayoutInflater layoutInflater) {
+    public ExpandableListAdapter createAdapter(List<ForgeVersion> versionList, LayoutInflater layoutInflater) {
         return new ForgeVersionListAdapter(versionList, layoutInflater);
     }
 
     @Override
     public Runnable createDownloadTask(Object selectedVersion, ModloaderListenerProxy listenerProxy) {
-        return new ForgeDownloadTask(listenerProxy, (String) selectedVersion);
+        return new ForgeDownloadTask(listenerProxy, (ForgeVersion) selectedVersion);
     }
 
     @Override
