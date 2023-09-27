@@ -57,15 +57,15 @@
     <string name="login_title_no_saved_account">该账户不存在！</string>
     <string name="login_dialog_no_saved_account">尚未保存任何账户!\n使用<b>“保持登录状态”</b>选项以在首次登录后保存账户</string>
     <!-- Hint -->
-    <string name="hint_control_mapping">"点击顶部中央齿轮图标打开背景菜单⚙\n点击一个按键进行自定义：编辑、缩放、删除或自定义其映射绑定"</string>
+    <string name="hint_control_mapping">"点击顶部中央齿轮图标打开背景蔡单⚙\n点击一个按键进行自定义：编辑、缩放、删除或自定义其映射绑定"</string>
     <!-- Warnings -->
     <string name="warning_remove_account">此账户将被移除！</string>
     <!-- AlertDialog title -->
     <string name="alerttitle_install_jre">安装 Jvav 运行时 %s （.tar.xz）</string>
     <string name="alerttitle_installmod">选择模组安装器</string>
     <!-- Error messages -->
-    <string name="error_fatal">PojavLauncher 意外崩溃</string>
-    <string name="error_no_version">无版本！</string>
+    <string name="error_fatal">PojavLauncher 意外去逝</string>
+    <string name="error_no_version">版本一命呜呼～</string>
     <string name="error_show_more">显示更多信息</string>
     <string name="error_show_less">隐藏</string>
     <!-- Toast messages -->
@@ -76,37 +76,37 @@
     <string name="toast_3">Exit</string>
     -->
     <!-- MCLauncherActivity: Tabs -->
-    <string name="mcl_tab_wiki">pojav百科</string>
+    <string name="mcl_tab_wiki">启动器百科</string>
     <string name="mcl_tab_console">开发控制台</string>
     <string name="mcl_tab_crash">崩溃日志</string>
     <!-- MCLauncherActivity: Account status -->
     <string name="mcl_account_connected">已连接</string>
-    <string name="mcl_account_local">本地模式</string>
+    <string name="mcl_account_local">傻逼模式</string>
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_version_msg">Minecraft %s 就绪</string>
     <string name="mcl_launch_cleancache">正在清理缓存</string>
     <string name="mcl_launch_downloading">正在下载 %s</string>
     <string name="mcl_launch_downloading_progress">"正在下载 %s (%.2f MB / %.2f MB)"</string>
     <string name="mcl_launch_download_assets">正在准备下载资源</string>
-    <string name="mcl_launch_error_localmode">Minecraft 无法在本地账户中进行安装，请切换到正版账户以继续</string>
+    <string name="mcl_launch_error_localmode">Minecraft 无法在傻逼账户中进行安装，请切换到大冤种账户以继续</string>
     <string name="mcl_options">选项</string>
     <string name="mcl_option_modinstall">启动模组安装器（例如 Forge、LabyMod、Fabric...）</string>
     <string name="mcl_option_modinstallwitharg">以自定义参数启动模组安装器</string>
     <string name="mcl_option_customcontrol">自定义控制键</string>
-    <string name="mcl_option_settings">设置</string>
+    <string name="mcl_option_settings">射置</string>
     <string name="mcl_option_about">关于</string>
     <string name="mcl_setting_title_use_surface_view">使用备用表面渲染</string>
-    <string name="mcl_setting_subtitle_use_surface_view">可能有助于提升受 GPU 机能限制的性能</string>
+    <string name="mcl_setting_subtitle_use_surface_view">如来有助于提升受 GPU 机能限制的性能</string>
     <string name="mcl_setting_title_uninstalljre">卸载 Jvav 运行时</string>
     <string name="mcl_setting_subtitle_uninstalljre">【需要重启启动器】这会让你重新安装 Jvav 运行时</string>
     <string name="mcl_setting_title_freeform">以自由窗口模式启动 Minecraft</string>
     <string name="mcl_setting_subtitle_freeform">在浮动窗口中启动 Minecraft 需要 Android 7.0+</string>
     <string name="mcl_setting_title_hide_sidebar">隐藏侧边栏</string>
-    <string name="mcl_setting_subtitle_hide_sidebar">怀念 v1 旧版界面的用户可能喜欢这样，它提供了更接近全屏的体验 </string>
-    <string name="mcl_setting_title_ignore_notch">忽略刘海屏</string>
+    <string name="mcl_setting_subtitle_hide_sidebar">没机会怀念 v1 旧版界面的用户可能喜欢这样，它提供了更接近全屏的体验 </string>
+    <string name="mcl_setting_title_ignore_notch">给刘海屏整个活</string>
     <string name="mcl_setting_subtitle_ignore_notch">忽略刘海屏并将屏幕内容扩展至其下方 \n给您以更完整的沉浸感 </string>
-    <string name="mcl_setting_title_resolution_scaler">添加更多的马赛克</string>
-    <string name="mcl_setting_subtitle_resolution_scaler">允许降低游戏画面分辨率，原生分辨率为 100%</string>
+    <string name="mcl_setting_title_resolution_scaler">添加更多的城市</string>
+    <string name="mcl_setting_subtitle_resolution_scaler">允许城市化，近视完全治疗是芝士分子</string>
     <string name="mcl_setting_title_longpresstrigger">长按触发时长</string>
     <string name="mcl_setting_subtitle_longpresstrigger">修改长按摧毁方块、丢弃物品的触发时长</string>
     <string name="mcl_setting_title_backtorightmouse">将返回键视为鼠标右键</string>
@@ -391,8 +391,8 @@
     <string name="fabric_dl_game_version">Minecraft 版本</string>
     <string name="fabric_dl_install">安装</string>
     <string name="fabric_dl_cant_read_meta">无法读取 %s 元数据！请稍后再试 </string>
-    <string name="modloader_dl_install_fabric">创建 布料 配置</string>
-    <string name="modloader_dl_install_quilt">创建 被子 配置</string>
+    <string name="modloader_dl_install_fabric">创建 🧻 配置</string>
+    <string name="modloader_dl_install_quilt">创建 quilt 配置</string>
     <string name="modloader_dl_install_forge">创建 Forge 配置</string>
     <string name="create_profile_vanilla">创建原版配置</string>
     <string name="create_profile_vanilla_like_versions">类原版版本</string>
