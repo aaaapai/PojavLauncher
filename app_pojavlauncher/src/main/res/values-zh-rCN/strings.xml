@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- App name part -->
-    <string name="app_name">PojavLauncher(汉化更新)</string>
+    <string name="app_name">PojavLauncher</string>
     <string name="app_short_name">Pojav CN</string>
     <string name="app_motd">在您的设备上启动《Minecraft：Java版》！</string>
     <!-- Pojav CN -->
@@ -18,21 +18,21 @@
     <string name="cn_unsupported_layout_version">不支持的控制布局版本！</string>
     <string name="cn_failed_to_save_layout">无法在以下位置保存控制布局：</string>
     <string name="cn_load_failed">加载失败</string>
-    <string name="cn_microsoft_login_fragment">开始登陆！</string>
+    <string name="cn_microsoft_login_fragment">开始登dua朗！</string>
     <string name="cn_first_start">\n感谢您使用《PojavLauncher》非官方完全汉化版：《Pojav CN》！\n软件作者：（B站）墨北Hopy。\n\n本软件对语言部分进行了修改，其他内容尽可能与官方版本保持一致。\n如果您在使用过程中遇到了问题，请在B站私信我哦！\n（https://space.bilibili.com/2008204513）</string>
     <string name="cn_first_start_button1">访问作者B站主页</string>
     <string name="cn_first_start_button2">不再提示</string>
     <!-- Login strings -->
     <string name="login_online_username_hint">电子邮箱或用户名</string>
-    <string name="login_online_login_label">登录</string>
+    <string name="login_online_login_label">登dua朗</string>
     <!-- Hint -->
-    <string name="hint_control_mapping">点击顶部中央齿轮图标打开菜单⚙\n点击一个按键进行自定义：编辑、缩放、删除或自定义其映射绑定</string>
+    <string name="hint_control_mapping">点击顶部中央齿轮图标打开蔡单⚙\n点击一个按键进行自定义：编辑、缩放、删除或自定义其映射绑定</string>
     <!-- Warnings -->
-    <string name="warning_remove_account">此账户将被移除！</string>
+    <string name="warning_remove_account">此账户将被撅！</string>
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">选择模组安装器</string>
     <!-- Error messages -->
-    <string name="error_fatal">PojavLauncher 意外崩溃</string>
+    <string name="error_fatal">启动器意外蚌埠住</string>
     <string name="error_no_version">无版本！</string>
     <string name="error_show_more">显示更多信息</string>
     <string name="error_show_less">隐藏</string>
