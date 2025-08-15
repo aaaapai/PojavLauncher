@@ -20,12 +20,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@main
-        with:
-           allow-snapshot-wrappers: true
-           
+ 
       - name: Build JRE JAR files
         run: |
           ./scripts/languagelist_updater.sh
@@ -34,6 +29,12 @@ jobs:
           # Build JRE JAR files (security manager, etc...)
           gradle :jre_lwjgl3glfw:build --no-daemon
 
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@main
+        with:
+           allow-snapshot-wrappers: true
+          
       - name: Build Debug .apk
         run: |
           # Build the launcher
