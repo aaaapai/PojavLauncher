@@ -1484,7 +1484,7 @@ public final class Tools {
                 return true;
             }
         }
-        return false;
+        return true;
     }
 
     public static void hasNoOnlineProfileDialog(Activity activity, @Nullable Runnable run, @Nullable String customTitle, @Nullable String customMessage){
