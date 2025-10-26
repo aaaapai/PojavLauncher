@@ -39,6 +39,8 @@ public class LauncherPreferences {
     public static final String PREF_VERSION_REPOS = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json";
     public static boolean PREF_CHECK_LIBRARY_SHA = true;
     public static boolean PREF_DISABLE_GESTURES = false;
+    public static boolean PREF_GAMEPAD_SDL_PASSTHRU = false;
+    public static boolean PREF_GAMEPAD_FORCEDSDL_PASSTHRU = false;
     public static boolean PREF_DISABLE_SWAP_HAND = false;
     public static float PREF_MOUSESPEED = 1f;
     public static int PREF_RAM_ALLOCATION;
@@ -89,6 +91,8 @@ public class LauncherPreferences {
         PREF_FORCE_ENGLISH = DEFAULT_PREF.getBoolean("force_english", false);
         PREF_CHECK_LIBRARY_SHA = DEFAULT_PREF.getBoolean("checkLibraries",true);
         PREF_DISABLE_GESTURES = DEFAULT_PREF.getBoolean("disableGestures",false);
+        PREF_GAMEPAD_SDL_PASSTHRU = DEFAULT_PREF.getBoolean("gamepadPassthru",false);
+        PREF_GAMEPAD_FORCEDSDL_PASSTHRU = DEFAULT_PREF.getBoolean("gamepadPassthruForced",false);
         PREF_DISABLE_SWAP_HAND = DEFAULT_PREF.getBoolean("disableDoubleTap", false);
         PREF_RAM_ALLOCATION = DEFAULT_PREF.getInt("allocation", findBestRAMAllocation(ctx));
         PREF_CUSTOM_JAVA_ARGS = DEFAULT_PREF.getString("javaArgs", "");
@@ -232,16 +236,19 @@ public class LauncherPreferences {
         // Using .getInt() leads to a class cast exception and using integer-arrays will just crash the layout/fragment.
         MGConfigJson.put("enableANGLE", Integer.parseInt(DEFAULT_PREF.getString("mg_renderer_setting_angle", "0")));
         MGConfigJson.put("enableNoError", Integer.parseInt(DEFAULT_PREF.getString("mg_renderer_setting_errorSetting", "0")));
+        MGConfigJson.put("fsr1Setting", Integer.parseInt(DEFAULT_PREF.getString("mg_renderer_setting_fsr", "0")));
 
         // These guys are SwitchPreferences so they get special treatment, they need to be converted to ints
         int gl43exts = DEFAULT_PREF.getBoolean("mg_renderer_setting_gl43ext", false) ? 1 : 0;
         int computeShaderext = DEFAULT_PREF.getBoolean("mg_renderer_computeShaderext", false) ? 1 : 0;
         int angleDepthClearFixMode = DEFAULT_PREF.getBoolean("mg_renderer_setting_angleDepthClearFixMode", false) ? 1 : 0;
         int timerQueryExt = DEFAULT_PREF.getBoolean("mg_renderer_setting_timerQueryExt", false) ? 1 : 0;
+        int dsaExt = DEFAULT_PREF.getBoolean("mg_renderer_dsaExt", false) ? 1 : 0;
         MGConfigJson.put("enableExtGL43", gl43exts);
         MGConfigJson.put("enableExtComputeShader", computeShaderext);
         MGConfigJson.put("angleDepthClearFixMode", angleDepthClearFixMode);
-        MGConfigJson.put("timerQueryExt", timerQueryExt);
+        MGConfigJson.put("enableExtTimerQuery", timerQueryExt);
+        MGConfigJson.put("enableExtDirectStateAccess", dsaExt);
         if (DEFAULT_PREF.getBoolean("mg_renderer_multidrawCompute", false)) {
             MGConfigJson.put("multidrawMode", 5); // Special handling for the (special mayhaps) compute emulation
         } else MGConfigJson.put("multidrawMode", Integer.parseInt(DEFAULT_PREF.getString("mg_renderer_setting_multidraw", "0")));
