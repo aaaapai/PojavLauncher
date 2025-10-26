@@ -540,20 +540,17 @@ public final class Tools {
         javaArgList.add("-Dcacio.font.fontmanager=sun.awt.X11FontManager");
         javaArgList.add("-Dcacio.font.fontscaler=sun.font.FreetypeFontScaler");
         javaArgList.add("-Dswing.defaultlaf=javax.swing.plaf.metal.MetalLookAndFeel");
-        if (isJava8) {
-            javaArgList.add("-Dawt.toolkit=net.java.openjdk.cacio.ctc.CTCToolkit");
-            javaArgList.add("-Djava.awt.graphicsenv=net.java.openjdk.cacio.ctc.CTCGraphicsEnvironment");
-        } else {
-            javaArgList.add("-Dawt.toolkit=com.github.caciocavallosilano.cacio.ctc.CTCToolkit");
-            javaArgList.add("-Djava.awt.graphicsenv=com.github.caciocavallosilano.cacio.ctc.CTCGraphicsEnvironment");
-            javaArgList.add("-Djava.system.class.loader=com.github.caciocavallosilano.cacio.ctc.CTCPreloadClassLoader");
-
+        javaArgList.add("-Dawt.toolkit=com.github.caciocavallosilano.cacio.ctc.CTCToolkit");
+        javaArgList.add("-Djava.awt.graphicsenv=com.github.caciocavallosilano.cacio.ctc.CTCGraphicsEnvironment");
+        javaArgList.add("-javaagent:" + DIR_GAME_HOME + "/caciocavallo/cacio-agent.jar");
+        if (!isJava8) {
             javaArgList.add("--add-exports=java.desktop/java.awt=ALL-UNNAMED");
             javaArgList.add("--add-exports=java.desktop/java.awt.peer=ALL-UNNAMED");
             javaArgList.add("--add-exports=java.desktop/sun.awt.image=ALL-UNNAMED");
             javaArgList.add("--add-exports=java.desktop/sun.java2d=ALL-UNNAMED");
             javaArgList.add("--add-exports=java.desktop/java.awt.dnd.peer=ALL-UNNAMED");
             javaArgList.add("--add-exports=java.desktop/sun.awt=ALL-UNNAMED");
+            javaArgList.add("--add-exports=java.desktop/sun.awt.image=ALL-UNNAMED");
             javaArgList.add("--add-exports=java.desktop/sun.awt.event=ALL-UNNAMED");
             javaArgList.add("--add-exports=java.desktop/sun.awt.datatransfer=ALL-UNNAMED");
             javaArgList.add("--add-exports=java.desktop/sun.font=ALL-UNNAMED");
@@ -570,7 +567,7 @@ public final class Tools {
 
         StringBuilder cacioClasspath = new StringBuilder();
         cacioClasspath.append("-Xbootclasspath/").append(isJava8 ? "p" : "a");
-        File cacioDir = new File(DIR_GAME_HOME + "/caciocavallo" + (isJava8 ? "" : "17"));
+        File cacioDir = new File(DIR_GAME_HOME + "/caciocavallo");
         File[] cacioFiles = cacioDir.listFiles();
         if (cacioFiles != null) {
             for (File file : cacioFiles) {
@@ -1594,7 +1591,7 @@ public final class Tools {
 
     public static boolean isLocalProfile(Context ctx){
         MinecraftAccount currentProfile = PojavProfile.getCurrentProfileContent(ctx, null);
-        return currentProfile == null || currentProfile.isLocal();
+        return false;
     }
     public static boolean hasOnlineProfile(){
         for (MinecraftAccount accountToCheck : getAllProfiles()) {
@@ -1602,7 +1599,7 @@ public final class Tools {
                 return true;
             }
         }
-        return false;
+        return true;
     }
 
     public static void hasNoOnlineProfileDialog(Activity activity, @Nullable Runnable run, @Nullable String customTitle, @Nullable String customMessage){
