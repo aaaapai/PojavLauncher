@@ -530,8 +530,8 @@ public class JREUtils {
             case "opengles3_desktopgl_zink_kopper": renderLibrary = "libglxshim.so"; break;
             case "opengles3_ltw" : renderLibrary = "libltw.so"; break;
             case "opengles3_ngg" : renderLibrary = "libng_gl4es.so"; break;
-            case "opengles_espryt" : renderLibrary = "libMobileGL.so"; break;
-            case "opengles_magma" : renderLibrary = "libMobileGL.so"; break;
+            case "opengles3_espryt" : renderLibrary = "libMobileGL.so"; break;
+            case "opengles3_magma" : renderLibrary = "libMobileGL.so"; break;
             case "opengles3_plus" : renderLibrary = "libgl4es_plus.so"; break;
 
             default:
