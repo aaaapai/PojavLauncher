@@ -45,10 +45,10 @@
         <item>opengles3_desktopgl_zink_kopper</item>        <item>vulkan_zink</item> <!-- virglrenderer with OpenGL ES 3 -->
         <item>opengles_mobileglues</item>
         <item>opengles3_ltw</item>
-        <item>opengles3_espryt</item>
+        <item>opengles_espryt</item>
         <item>opengles3_ngg</item>
         <item>opengles3_plus</item>
-        <item>opengles3_magma</item>
+        <item>opengles_magma</item>
         
     </string-array>
     <string-array name="download_source_names">
