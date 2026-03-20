@@ -1056,7 +1056,31 @@ public class GLFW
         } else if (System.getenv("AMETHYST_RENDERER").equals("opengles_mobileglues")) {
             glMajor = 4;
             glMinor = 0;
-        }
+        } else if (System.getenv("AMETHYST_RENDERER").equals("opengles3_ngg")) {
+            glMajor = 3;
+            glMinor = 1;
+			win.windowAttribs.put(GLFW_HOVERED, 1);
+            win.windowAttribs.put(GLFW_VISIBLE, 1);
+            mGLFWWindowMap.put(ptr, win);
+            mainContext = ptr;
+			if(mGLFWWindowVisibleOnCreation || monitor != 0) {
+              // Show window by default if GLFW_VISIBLE hint is specified on creation or
+              // if the monitor is nonnull (fullscreen requested)
+              glfwShowWindow(ptr);
+			}
+			win.windowAttribs.put(GLFW_CONTEXT_VERSION_MAJOR, glMajor);
+            win.windowAttribs.put(GLFW_CONTEXT_VERSION_MINOR, glMinor);
+			return ptr;
+		} else if (System.getenv("AMETHYST_RENDERER").equals("opengles3_espryt")) {
+            glMajor = 3;
+            glMinor = 3;
+		} else if (System.getenv("AMETHYST_RENDERER").equals("opengles3_magma")) {
+            glMajor = 3;
+            glMinor = 3;
+		} else if (System.getenv("AMETHYST_RENDERER").equals("opengles3_plus")) {
+            glMajor = 2;
+            glMinor = 1;
+		}
         // Get the real values properly
         FunctionProvider functionProvider = org.lwjgl.opengl.GL.getFunctionProvider();
         if (functionProvider != null) {
