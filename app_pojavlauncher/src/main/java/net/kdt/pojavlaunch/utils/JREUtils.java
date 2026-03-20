@@ -217,7 +217,46 @@ public class JREUtils {
             envMap.put("AMETHYST_RENDERER", LOCAL_RENDERER);
             if(LOCAL_RENDERER.equals("opengles3_ltw")) {
                 envMap.put("LIBGL_ES", "3");
+                envMap.put("LIBGL_NOERROR", "1");
                 envMap.put("POJAVEXEC_EGL","libltw.so"); // Use ANGLE EGL
+            }
+            if(LOCAL_RENDERER.equals("opengles3_ngg")) {
+                envMap.put("LIBGL_ES", "3");
+                envMap.put("LIBGL_NOERROR", "1");
+                envMap.put("POJAVEXEC_EGL","libng_gl4es.so");
+                envMap.put("LIBGL_USE_MC_COLOR", "1");
+                envMap.put("LIBGL_GL", "33");
+                envMap.put("LIBGL_NORMALIZE", "1");
+                envMap.put("LIBGL_NOERROR", "1");
+                envMap.put("LIBGL_FB", "1");
+                envMap.put("LIBGL_EGL", "libEGL.so");
+                envMap.put("LIBGL_GLES", "libGLESv3.so");
+            }
+            if(LOCAL_RENDERER.equals("opengles3_espryt")) {
+                envMap.put("LIBGL_ES", "3");
+                envMap.put("LIBGL_NOERROR", "1");
+                envMap.put("MOBILEGL_BACKEND_TYPE", "DirectGLES");
+                envMap.put("LIBGL_EGL", "libEGL.so");
+                envMap.put("LIBGL_GLES", "libGLESv3.so");
+                envMap.put("POJAVEXEC_EGL","libMobileGL.so");
+            }
+            if(LOCAL_RENDERER.equals("opengles3_magma")) {
+                envMap.put("LIBGL_ES", "3");
+                envMap.put("LIBGL_NOERROR", "1");
+                envMap.put("MOBILEGL_BACKEND_TYPE", "DirectVulkan");
+                envMap.put("POJAVEXEC_EGL","libMobileGL.so");
+            }
+            if(LOCAL_RENDERER.equals("opengles3_plus")) {
+                envMap.put("LIBGL_ES", "3");
+                envMap.put("LIBGL_NOERROR", "1");
+                envMap.put("POJAVEXEC_EGL","libEGL_angle.so");
+                envMap.put("LIBGL_USE_MC_COLOR", "1");
+                envMap.put("LIBGL_GL", "33");
+                envMap.put("LIBGL_NORMALIZE", "1");
+                envMap.put("LIBGL_NOERROR", "1");
+                envMap.put("LIBGL_FB", "1");
+                envMap.put("LIBGL_EGL", "libEGL_angle.so");
+                envMap.put("LIBGL_GLES", "libGLESv2_angle.so");
             }
             if(LOCAL_RENDERER.equals("opengles_mobileglues")){
                 envMap.put("MG_DIR_PATH", Tools.DIR_DATA + "/MobileGlues");
@@ -488,6 +527,11 @@ public class JREUtils {
             case "opengles_mobileglues": renderLibrary = "libmobileglues.so"; break;
             case "opengles3_desktopgl_zink_kopper": renderLibrary = "libglxshim.so"; break;
             case "opengles3_ltw" : renderLibrary = "libltw.so"; break;
+            case "opengles3_ngg" : renderLibrary = "libng_gl4es.so"; break;
+            case "opengles3_espryt" : renderLibrary = "libMobileGL.so"; break;
+            case "opengles3_magma" : renderLibrary = "libMobileGL.so"; break;
+            case "opengles3_plus" : renderLibrary = "libgl4es_plus.so"; break;
+
             default:
                 Log.w("RENDER_LIBRARY", "No renderer selected, defaulting to opengles2");
                 renderLibrary = "libgl4es_115.so";
