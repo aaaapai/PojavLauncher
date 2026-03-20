@@ -6,6 +6,10 @@
         <item name="2">@string/mcl_setting_renderer_vulkan_zink</item>
         <item name="3">@string/mcl_setting_renderer_mobileglues</item>
         <item name="4">@string/mcl_setting_renderer_ltw</item>
+        <item name="5">mobilegl espryt</item>
+        <item name="6">krypton wrapper</item>
+        <item name="7">gl4es plus</item>
+        <item name="8">mobilegl magma</item>
     </string-array>
 
     <string-array name="menu_customcontrol">
@@ -41,6 +45,11 @@
         <item>opengles3_desktopgl_zink_kopper</item>        <item>vulkan_zink</item> <!-- virglrenderer with OpenGL ES 3 -->
         <item>opengles_mobileglues</item>
         <item>opengles3_ltw</item>
+        <item>opengles3_espryt</item>
+        <item>opengles3_ngg</item>
+        <item>opengles3_plus</item>
+        <item>opengles3_magma</item>
+        
     </string-array>
     <string-array name="download_source_names">
         <item>@string/global_default</item>
