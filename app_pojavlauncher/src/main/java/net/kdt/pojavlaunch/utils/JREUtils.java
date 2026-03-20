@@ -224,40 +224,41 @@ public class JREUtils {
                 envMap.put("LIBGL_ES", "3");
                 envMap.put("LIBGL_NOERROR", "1");
                 envMap.put("POJAVEXEC_EGL","libEGL.so");
-                //envMap.put("LIBGL_USE_MC_COLOR", "1");
-                envMap.put("LIBGL_GL", "31");
+                envMap.put("LIBGL_USE_MC_COLOR", "1");
+                envMap.put("LIBGL_GL", "33");
                 envMap.put("LIBGL_NORMALIZE", "1");
                 envMap.put("LIBGL_NOERROR", "1");
-                //envMap.put("LIBGL_FB", "1");
-                //envMap.put("LIBGL_EGL", "libEGL.so");
-                //envMap.put("LIBGL_GLES", "libGLESv3.so");
+                envMap.put("LIBGL_FB", "1");
+                envMap.put("LIBGL_EGL", "libEGL.so");
+                envMap.put("LIBGL_GLES", "libGLESv3.so");
             }
-            if(LOCAL_RENDERER.equals("opengles_espryt")) {
-                //envMap.put("LIBGL_ES", "3");
+            if(LOCAL_RENDERER.equals("opengles3_espryt")) {
+                envMap.put("LIBGL_ES", "3");
                 envMap.put("LIBGL_NOERROR", "1");
                 envMap.put("MOBILEGL_BACKEND_TYPE", "DirectGLES");
                 //envMap.put("LIBGL_EGL", "libEGL.so");
                 //envMap.put("LIBGL_GLES", "libGLESv3.so");
                 envMap.put("POJAVEXEC_EGL","libMobileGL.so");
             }
-            if(LOCAL_RENDERER.equals("opengles_magma")) {
-                //envMap.put("LIBGL_ES", "3");
+            if(LOCAL_RENDERER.equals("opengles3_magma")) {
+                envMap.put("LIBGL_ES", "3");
                 envMap.put("LIBGL_NOERROR", "1");
                 envMap.put("MOBILEGL_BACKEND_TYPE", "DirectVulkan");
                 envMap.put("POJAVEXEC_EGL","libMobileGL.so");
             }
             if(LOCAL_RENDERER.equals("opengles3_plus")) {
-                //envMap.put("LIBGL_ES", "3");
+                envMap.put("LIBGL_ES", "3");
                 envMap.put("LIBGL_NOERROR", "1");
-                envMap.put("POJAVEXEC_EGL","libEGL.so");
-                envMap.put("LIBGL_SHADERCONV","1");
+                envMap.put("POJAVEXEC_EGL","libEGL_angle.so");
+                envMap.put("LIBGL_SHADERCONVERTER","1");
+                envMap.put("LIBGL_BACKEND_ANGLE","1");
                 // envMap.put("LIBGL_USE_MC_COLOR", "1");
                 envMap.put("LIBGL_GL", "21");
                 envMap.put("LIBGL_NORMALIZE", "1");
                 envMap.put("LIBGL_NOERROR", "1");
-                //envMap.put("LIBGL_FB", "1");
-                envMap.put("LIBGL_EGL", "libEGL.so");
-                envMap.put("LIBGL_GLES", "libGLESv3.so");
+                envMap.put("LIBGL_FB", "1");
+                envMap.put("LIBGL_EGL", "libEGL_angle.so");
+                envMap.put("LIBGL_GLES", "libGLESv2_angle.so");
             }
             if(LOCAL_RENDERER.equals("opengles_mobileglues")){
                 envMap.put("MG_DIR_PATH", Tools.DIR_DATA + "/MobileGlues");
